@@ -1,0 +1,36 @@
+.login-page{
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* estilos del contenedor de los controles de inicio de sesión */
+.login-controls-container{
+    height: 100%;
+    padding: 3rem 20%;
+    box-sizing: border-box;
+}
+.login-controls{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-controls img{
+    width: 100%;
+}
+.flex-space-between{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 1rem 0;
+    align-items: center;
+}
+
+/* estilos del contenedor de la imagen de inicio de sesión */
+.login-image-container{
+    background: url('../UAO.jpg') no-repeat;
+    background-size: cover;
+    height: 100%;
+}
