@@ -5,11 +5,12 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+import FormHelperText from '@material-ui/core/FormHelperText';
 // icons
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-function PasswordInput({ password, onChange }) {
+function PasswordInput({ password, onChange, error, helperText }) {
 
     // state
     const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +20,7 @@ function PasswordInput({ password, onChange }) {
     }
 
     return (
-        <FormControl fullWidth variant="outlined">
+        <FormControl fullWidth variant="outlined" error={error}>
             <InputLabel htmlFor="password">Contraseña</InputLabel>
             <OutlinedInput
                 id="password"
@@ -39,6 +40,7 @@ function PasswordInput({ password, onChange }) {
                 }
                 labelWidth={80}
             />
+            <FormHelperText error>{helperText}</FormHelperText>
         </FormControl>
     )
 }

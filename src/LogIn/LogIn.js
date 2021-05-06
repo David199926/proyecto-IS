@@ -13,20 +13,7 @@ function LogInImage() {
 }
 
 export default function LogIn() {
-    // state
-    const [rememberMe, setRememberMe] = useState(false);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-
-    // state handlers
-    const handleCheck = (setFunction) => {
-        return (event) => { setFunction(event.target.checked) }
-    }
-    const handleChange = (setFunction) => {
-        return (event) => { setFunction(event.target.value) }
-    }
-
+    
     return (
         <div className="login-page">
             <Grid container spacing={0}>
@@ -38,14 +25,7 @@ export default function LogIn() {
                 </Hidden>
                 {/* login controls */}
                 <Grid item xs={12} md={6}>
-                    <LogInControls
-                        rememberMe = {rememberMe}
-                        onChangeRememberMe = {handleCheck(setRememberMe)}
-                        username = {username}
-                        onChangeUsername = {handleChange(setUsername)}
-                        password = {password}
-                        onChangePassword = {handleChange(setPassword)}
-                    />
+                    <LogInControls/>
                 </Grid>
             </Grid>
         </div>

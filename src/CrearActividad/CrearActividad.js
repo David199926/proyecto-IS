@@ -73,7 +73,6 @@ function CrearActividad() {
     const [interestsAvailable, setInterestsAvailable] = useState(interestValues)
     const [inputValues, setInputvalues] = useState([]);
 
-
     // get activity data
     const getTypeDataInput = () => {
         return (
@@ -168,6 +167,11 @@ function CrearActividad() {
         setInterests((interests) => interests.filter((interest) => interest !== chipToDelete));
         setInterestsAvailable([...interestsAvailable, chipToDelete]);
     };
+
+    // create activity
+    const createActivity = () => {
+        window.location = "/";
+    }
 
     return (
         <div className="main-container">
@@ -306,7 +310,8 @@ function CrearActividad() {
                 <Fab
                     variant="extended"
                     color="primary"
-                    onClick={() => alert("subir")}>
+                    onClick={createActivity}
+                >
                     Confirmar
                 </Fab>
             </Grid>
@@ -314,4 +319,4 @@ function CrearActividad() {
     )
 }
 
-export default CrearActividad
+export default CrearActividad;

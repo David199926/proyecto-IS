@@ -1,12 +1,13 @@
 import LogIn from './LogIn/LogIn';
-import CrearActividad from './CrearActividad/CrearActividad'
+import CrearActividad from './CrearActividad/CrearActividad';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <LogIn />
-      <CrearActividad />
-    </div>
+    <Router>
+      <Route path="/" exact component={LogIn} />
+      <Route path="/crear" component={CrearActividad} />
+    </Router>
   );
 }
 
