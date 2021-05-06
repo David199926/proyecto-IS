@@ -1,9 +1,11 @@
-import LogIn from './LogIn/LogIn'
+import LogIn from './LogIn/LogIn';
+import CrearActividad from './CrearActividad/CrearActividad'
 
 function App() {
   return (
     <div>
-      <LogIn/>
+      <LogIn />
+      <CrearActividad />
     </div>
   );
 }
