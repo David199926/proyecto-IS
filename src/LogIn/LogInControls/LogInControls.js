@@ -54,28 +54,29 @@ function LogInControls() {
             username,
             password,
         })
-        .then(response => {
-            let error = response.data.error;
-            if (error === null) {
-                // all is correctly
-                window.location = '/crear';
-            }
-            // unregistered user
-            if (error === 0) {
-                setErrorMessage({
-                    username: "Este usuario no se encuentra registrado",
-                    password: "",
-                });
-            }
-            // wrong password
-            if (error === 1) {
-                setErrorMessage({
-                    password: "Contraseña incorrecta",
-                    username: "",
-                });
-            }
-            return false;
-        })
+            .then(response => {
+                let error = response.data.error;
+                if (error === null) {
+                    // all is correctly
+                    window.location = '/crear';
+                    return true;
+                }
+                // unregistered user
+                if (error === 0) {
+                    setErrorMessage({
+                        username: "Este usuario no se encuentra registrado",
+                        password: "",
+                    });
+                }
+                // wrong password
+                if (error === 1) {
+                    setErrorMessage({
+                        password: "Contraseña incorrecta",
+                        username: "",
+                    });
+                }
+                return false;
+            })
     }
 
     return (
@@ -118,14 +119,12 @@ function LogInControls() {
                             <Link href="#">¿Olvidó su contraseña?</Link>
                         </div>
                     </Grid>
-
                 </Grid>
                 <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     fullWidth
-
                 >
                     Acceder
                 </Button>
