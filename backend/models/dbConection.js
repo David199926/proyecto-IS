@@ -5,4 +5,4 @@ admin.initializeApp({
     databaseURL: process.env.DATABASE_URL,
 });
 
-export default admin.database();
+module.exports = admin.database();

@@ -1,4 +1,4 @@
-const db = require('../models/dbConection');
+// const db = require('../models/dbConection');
 
 const validate = (req, res) => {
     const {username, password} = req.body;
