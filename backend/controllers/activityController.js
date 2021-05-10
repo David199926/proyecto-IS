@@ -9,7 +9,7 @@ const getCategoriesAndTypes = (req, res) => {
 
 const getActivityTypeData = (req, res) => {
     // const values, use database later
-    const typeInfo = {
+    const typeData = {
         AAA1: {
             aaa11: 'aaa11',
             aaa12: 'aaa12',
@@ -44,7 +44,7 @@ const getActivityTypeData = (req, res) => {
         },
     };
 
-    res.json(typeInfo);
+    res.json(typeData);
 }
 
 module.exports = {

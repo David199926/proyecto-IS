@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './LogIn.css';
 
 import Grid from '@material-ui/core/Grid';

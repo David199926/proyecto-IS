@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
@@ -7,71 +7,61 @@ import Fab from '@material-ui/core/Fab';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import Progress from './Progress/Progress';
-import UploadFile from './UploadFile/UploadFile'
+import UploadFile from './UploadFile/UploadFile';
+
+import axios from 'axios';
 
 // styles
-import './CrearActividad.css'
+import './CrearActividad.css';
+
+// constants
+import { BACKEND_URL } from '../Constants/constants.js';
 
 function CrearActividad() {
-
-    // const values
-    const categories = {
-        'Académica': ['AAA1', 'AAA2', 'AAA3', 'AAA4'],
-        'Profesional': ['PPP1', 'PPP2', 'PPP3', 'PPP4'],
-    }
-    const typeData = {
-        AAA1: {
-            aaa11: 'aaa11',
-            aaa12: 'aaa12',
-        },
-        AAA2: {
-            aaa21: 'aaa21',
-            aaa22: 'aaa22',
-        },
-        AAA3: {
-            aaa31: 'aaa31',
-            aaa32: 'aaa32',
-        },
-        AAA4: {
-            aaa41: 'aaa41',
-            aaa42: 'aaa42',
-        },
-        PPP1: {
-            ppp11: 'ppp11',
-            ppp12: 'ppp12',
-        },
-        PPP2: {
-            ppp21: 'ppp21',
-            ppp22: 'ppp22',
-        },
-        PPP3: {
-            ppp31: 'ppp31',
-            ppp32: 'ppp32',
-        },
-        PPP4: {
-            ppp41: 'ppp41',
-            ppp42: 'ppp42',
-        },
-    }
-    const categoryValues = Object.keys(categories);
+  
     const visibilityValues = ['pública', 'privada'];
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
     const interestValues = ['interes1', 'interes2'];
 
     // component state
-    const [title, setTItle] = useState("");
+    const [categories, setCategories] = useState({});
+    const [typeData, setTypeData] = useState({});
+
+    const [title, setTItle] = useState('');
     const [visibility, setVisibility] = useState(visibilityValues[0]);
-    const [category, setCategory] = useState(categoryValues[0]);
-    const [activityType, setActivityType] = useState(categories[category][0]);
+    const [category, setCategory] = useState([]);
+    const [activityType, setActivityType] = useState('');
     const [progress, setProgress] = useState(0);
     const [startPeriod, setStartPeriod] = useState(periods[0]);
     const [finishPeriod, setFinishPeriod] = useState(periods[0]);
     const [description, setDescription] = useState('Esta es una descripción');
     const [interests, setInterests] = useState([]);
-    const [activityData, setActivityData] = useState(typeData[activityType]);
+    const [activityData, setActivityData] = useState({});
     const [file, setFile] = useState(null);
     const [interestsAvailable, setInterestsAvailable] = useState(interestValues)
     const [inputValues, setInputvalues] = useState([]);
+
+    // component effects
+
+    // get activities categories from backend (ONLY ON COMPONENT MOUNT)
+    useEffect( () => {
+        axios.get(`${BACKEND_URL}/categories`)
+        .then((response) => {
+            let categories = response.data;
+            setCategories(categories);
+            const categoryValues = Object.keys(categories);
+            const activityType = Object.values(categories)[0][0];
+            setCategory(categoryValues[0]);
+            setActivityType(activityType);
+            // get type data from backend
+            axios.get(`${BACKEND_URL}/typedata`)
+            .then((response) => {
+                let typeData = response.data;
+                setTypeData(typeData);
+                setActivityData(typeData[activityType]);
+            })
+        })
+    }, []);
 
     // get activity data
     const getTypeDataInput = () => {
@@ -153,7 +143,7 @@ function CrearActividad() {
     // type change produces activity data change
     const handleActivityType = (value) => {
         setActivityType(value);
-        setActivityData(typeData[value]);
+        setActivityData(typeData[value] || {});
     }
     // handle interest input
     const pushInterest = (event, newValue) => {
@@ -182,6 +172,7 @@ function CrearActividad() {
                     <TextField
                         id="title"
                         label="Título"
+                        value={title}
                         variant="outlined"
                         onChange={handleChange(setTItle)}
                         fullWidth
@@ -212,7 +203,7 @@ function CrearActividad() {
                         onChange={handleCategory}
                         fullWidth
                     >
-                        {getMenuItems(categoryValues)}
+                        {getMenuItems(Object.keys(categories))}
                     </TextField>
                 </Grid>
                 <Grid item xs={8}>
@@ -226,7 +217,7 @@ function CrearActividad() {
                         fullWidth
                         onChange={(event) => { handleActivityType(event.target.value) }}
                     >
-                        {getMenuItems(categories[category])}
+                        {getMenuItems(categories[category] || [])}
                     </TextField>
                 </Grid>
                 <Grid item xs={12}>
@@ -268,6 +259,7 @@ function CrearActividad() {
                     {/* Descripción de la actividad */}
                     <TextField
                         label="Descripción"
+                        value={description}
                         variant="outlined"
                         multiline
                         rows={4}
