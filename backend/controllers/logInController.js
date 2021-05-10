@@ -1,11 +1,4 @@
-const admin = require('firebase-admin');
-
-admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-    databaseURL: process.env.DATABASE_URL,
-});
-
-const db = admin.database();
+const db = require('../models/dbConection');
 
 const validate = (req, res) => {
     const {username, password} = req.body;
