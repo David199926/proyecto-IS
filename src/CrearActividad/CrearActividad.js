@@ -124,7 +124,7 @@ function CrearActividad() {
             return (year > startYear) || (year === startYear && semester >= startSemester);
         });
         if (!availablePeriods.includes(finishPeriod)) {
-            // avoid out of range select warning
+            // avoid out of range select warninggggg
             setFinishPeriod(availablePeriods[0]);
         }
         return getMenuItems(availablePeriods);
