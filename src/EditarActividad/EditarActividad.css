@@ -1,0 +1,12 @@
+.main-container{
+    width: 50rem;
+    box-sizing: border-box;
+    padding: 1rem;
+    margin: auto;
+    position: relative;
+    padding-top: 60px;
+}
+
+.interests-chips {
+    margin-right: .5rem;
+}

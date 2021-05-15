@@ -1,0 +1,14 @@
+.geneR{
+    width: 294px;
+    float: left;
+}
+
+.exportR{
+    align-items: center;
+}
+
+.resultR{
+    text-align: center;
+    float: inherit;
+}
+
