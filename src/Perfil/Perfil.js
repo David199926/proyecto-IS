@@ -34,7 +34,10 @@ export default function Perfil() {
   const classes = useStyles();
   
   // component state
-  const [profileImg, setImg]=  useState(perfil) 
+  const [profileImg, setImg] =  useState(perfil);
+  const [topic, setTopic] = React.useState('');
+  const [legend, setLegend] = React.useState('');
+  const [errorTopic, seterrorTopic] = React.useState(false);
   
 
   //handle image reader
@@ -47,7 +50,6 @@ export default function Perfil() {
     }
    reader.readAsDataURL(e.target.files[0])
   }
-
   
   const interestValues = ['interes1', 'interes2'];
 
@@ -84,6 +86,7 @@ const pushInterest = (event, newValue) => {
   setInterestsAvailable(interestsAvailable.filter((value) => value !== newValue));
   setInputvalues([]);
 };
+
 
   return (
    
@@ -155,7 +158,34 @@ const pushInterest = (event, newValue) => {
                         value={inputValues}
                         onChange={pushInterest}
                         getOptionLabel={(interest) => interest}
-                        renderInput={(params) => <TextField {...params} label="Temas de interés" variant="outlined" fullWidth />}
+                        renderInput={(params) => 
+                        <TextField {...params}  
+                        onChange = {(e) => {
+                          setTopic(e.target.value);
+                          if(topic.length > 10 ){
+                            seterrorTopic(true);
+                            setLegend("Los temas de interes contiene maximo de 12 caracteres. Ejemplo: POO o Robotica");
+                          }
+
+                          else if(topic === ''){
+                            seterrorTopic(true);
+                            setLegend("Los temas no pueden ir con un caracter");
+                          }
+                           
+                          else if(topic === "[0-1000]"){
+                            seterrorTopic(true);
+                            setLegend("No se admiten numeros")
+                          }
+
+                          else{
+                            seterrorTopic(false);
+                            setLegend("");
+                          }
+                        }}
+                        error = {errorTopic}
+                        label="Temas de Interes"
+                        helperText = {legend}
+                        variant="outlined" />}
                     />
                 </Grid>
                 {/* Chips Temas de interés de la actividad */}
