@@ -18,7 +18,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import perfil from '../Resources/Images/logo.png';
+import perfil from '../Resources/Images/profile.png';
 
 // styles
 import './AppBarDrawerD.css';
