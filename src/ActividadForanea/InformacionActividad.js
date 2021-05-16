@@ -3,9 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 
-export const InformacionActividad = () => {
-    
-    
+export const InformacionActividad = ({ categoria,
+    tipoActividad, periodoAcademicoInicio, periodoAcademicoFin, codigo, rol
+}) => {
+
+
     return (
         <>
             <Grid container >
@@ -19,8 +21,8 @@ export const InformacionActividad = () => {
 
                     <Grid item >
                         <Typography color={'textSecondary'} variant="h6" gutterBottom>
-                            Academica
-                    </Typography>
+                        {categoria}
+                        </Typography>
                     </Grid>
                 </Grid>
 
@@ -33,8 +35,8 @@ export const InformacionActividad = () => {
 
                     <Grid item >
                         <Typography color={'textSecondary'} variant="h6" gutterBottom>
-                            Proyecto de investigación
-                    </Typography>
+                            {tipoActividad}
+                        </Typography>
                     </Grid>
                 </Grid>
 
@@ -47,8 +49,8 @@ export const InformacionActividad = () => {
 
                     <Grid item >
                         <Typography color={'textSecondary'} variant="h6" gutterBottom>
-                            2020-3
-                    </Typography>
+                            {periodoAcademicoInicio}
+                        </Typography>
                     </Grid>
                 </Grid>
 
@@ -61,8 +63,8 @@ export const InformacionActividad = () => {
 
                     <Grid item >
                         <Typography color={'textSecondary'} variant="h6" gutterBottom>
-                            2021-1
-                    </Typography>
+                        {periodoAcademicoFin}
+                        </Typography>
                     </Grid>
                 </Grid>
 
@@ -75,8 +77,8 @@ export const InformacionActividad = () => {
 
                     <Grid item >
                         <Typography color={'textSecondary'} variant="h6" gutterBottom>
-                            0000
-                    </Typography>
+                            {codigo}
+                        </Typography>
                     </Grid>
                 </Grid>
 
@@ -89,8 +91,8 @@ export const InformacionActividad = () => {
 
                     <Grid item >
                         <Typography color={'textSecondary'} variant="h6" gutterBottom>
-                            Director
-                    </Typography>
+                            {rol}
+                        </Typography>
                     </Grid>
                 </Grid>
 
