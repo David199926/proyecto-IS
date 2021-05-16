@@ -1,8 +1,18 @@
 const getCategoriesAndTypes = (req, res) => {
     // const values, use database latter
     const categories =  {
-        'Académica': ['AAA1', 'AAA2', 'AAA3', 'AAA4'],
-        'Profesional': ['PPP1', 'PPP2', 'PPP3', 'PPP4'],
+        'Cualquier': ['Cualquier'],
+
+        'Académica':[
+            'Cualquier', 'Asignatura de pregrado', 'Proyecto de investigación', 'Extensión', 'Participación en redes académicas de cooperación internacional',
+            'Producción académica','Profesor invitado','Movilidad nacional/internacional','EgresaParticipación en eventos nacionales o internacionalesdos',
+            'Talleres, seminarios y otros eventos', 'Promoción del programa', 'Dirección de trabajo de grado', 'Jurado de tesis de grado',
+            'Dirección de trabajo de grado', 'Proyección social'
+            ],
+
+        'Profesional': ['Cualquier','Premios o reconocimientos', 'Certificación', 'Patentes', 'Registro de software'],
+        
+        'Gestion': ['Cualquier','Permanencia y retención', 'Gestión del programa académico'],
     };
     res.json(categories);
 }
