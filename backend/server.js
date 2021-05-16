@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 // controllers
 const logInController = require('./controllers/logInController');
-const activityController = require('./controllers/activityController')
+const activityController = require('./controllers/activityController');
+const actividadForanea = require('./controllers/actividadForanea');
 
 require('dotenv').config();
 
@@ -19,6 +20,10 @@ app.post('/validate', logInController.validate);
 app.get('/categories', activityController.getCategoriesAndTypes);
 // get activities types data
 app.get('/typedata', activityController.getActivityTypeData);
+
+//devuelve un JSON con todos los datos de la actividad
+app.get('/actividad-foranea' , actividadForanea.getActividad );
+
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
