@@ -9,7 +9,7 @@ import { TemasRelacionados } from './TemasRelacionados';
 
 
 
-export const ActividadForanea = () => {
+const ActividadForanea = () => {
 
     const initialState = {
         porcentajeProgreso: 23,
@@ -66,3 +66,5 @@ export const ActividadForanea = () => {
         </>
     )
 }
+
+export default ActividadForanea;
