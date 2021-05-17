@@ -25,6 +25,8 @@ app.get('/typedata', activityController.getActivityTypeData);
 app.get('/actividad-foranea' , actividadForanea.getActividad );
 
 
+app.get('/prueba', activityController.getCategoriesAndTypes)
+
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });

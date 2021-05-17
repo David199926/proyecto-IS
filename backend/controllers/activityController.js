@@ -1,3 +1,5 @@
+categoriasModel = require('../models/categoriasModel');
+/*
 const getCategoriesAndTypes = (req, res) => {
     // const values, use database latter
     const categories = {
@@ -15,7 +17,7 @@ const getCategoriesAndTypes = (req, res) => {
         ],
     };
     res.json(categories);
-}
+}*/
 
 const getActivityTypeData = (req, res) => {
     // const values, use database later
@@ -77,7 +79,67 @@ const getActivityTypeData = (req, res) => {
     res.json(typeData);
 }
 
+const getCategoriesAndTypes = (req, res) => {
+
+    let formatedCategories = {};
+    let typeData = {};
+
+    categoriasModel.getAllCategories()
+        .then((result) => {
+            result.forEach((category) => {
+                // create categories
+                formatedCategories = { ...formatedCategories, [category.nombre]: [] };
+                category.tipos.forEach((tipo) => {
+                    let { nombre, campos, requiereArchivo } = tipo;
+                    typeData = { ...typeData, [nombre]: { campos, requiereArchivo } };
+                    // push category types
+                    formatedCategories[category.nombre].push(nombre);
+                })
+            })
+            res.json({ formatedCategories, typeData });
+        })
+}
+
+/**
+ * Formats categories and types from raw database raw data
+ * @param {object} categories 
+ * @returns 
+ */
+const formatCategories = (categories) => {
+    let formatedCategories = {};
+
+    categories.forEach((category) => {
+        // create categories
+        formatedCategories = { ...formatedCategories, [category.nombre]: [] };
+        category.tipos.forEach((tipo) => {
+            // push category types
+            formatedCategories[category.nombre].push(tipo.nombre);
+        })
+    })
+
+    return formatedCategories;
+}
+
+/**
+ * Formats data type and types from raw database raw data
+ * @param {object} categories 
+ */
+const formatDataTypes = (categories) => {
+    let typeData = {};
+
+    categories.forEach((category) => {
+        category.tipos.forEach((tipo) => {
+            // push category types
+            let { nombre, campos, requiereArchivo } = tipo;
+            typeData = { ...typeData, [nombre]: { campos, requiereArchivo } };
+        })
+    })
+
+    return typeData;
+}
+
 module.exports = {
     getCategoriesAndTypes,
     getActivityTypeData,
+    getCategoriesAndTypes,
 }
