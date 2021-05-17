@@ -32,7 +32,7 @@ function ExportReport() {
     return (
         <div className="exportR"  Style={" padding-top: 130px "  }>
             <Grid container spacing={0} alignItems="center" justify="center" >
-                <Grid item xs={5} >
+                <Grid item xs={3} >
                     {/* periodo académico de inicio */}
                     <TextField
                         id="startExportar"

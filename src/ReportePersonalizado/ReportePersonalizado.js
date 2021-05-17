@@ -1,9 +1,9 @@
 import GeneReport from './Forms/GenerarReporte';
 import ExportReport from './Forms/ExportarReporte';
 import ResultReport from './Forms/ResultadoReporte';
-import AppBarDrawerD from '../AppBarDrawerD/AppBarDrawerD';
 import {  createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+import './ReportePersonalizado.css'
 
 const theme = createMuiTheme({
   palette:{
@@ -15,17 +15,16 @@ const theme = createMuiTheme({
 function Report() {
   return (
     <div className="container" Style={ 'padding-top: 60px'} >
-      <AppBarDrawerD   />
-      <h1>Reporte personalizado</h1>
+      <h1 Style={ 'margin-left: 330px'} >Reporte personalizado</h1>
       
-        <div Style={" padding-left: 50px"  }>
+        <div clasName="r" Style={ 'margin-left: 330px'}>
         <ThemeProvider theme={theme}>
             <GeneReport/> 
            
             <div>
             
                 <ResultReport/>
-                <div Style={" padding-left: 300px  "  }>
+                <div Style={" padding-left: 500px  "  }>
                     <ExportReport />
                 </div>
             </div>

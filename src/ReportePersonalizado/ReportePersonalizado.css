@@ -4,5 +4,7 @@
     padding: 1rem;
     margin: auto;
     position: relative;
-    padding-top: 90px;
+}
+.continer{
+    width: 260px;
 }

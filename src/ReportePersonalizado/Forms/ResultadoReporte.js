@@ -1,5 +1,6 @@
 import React from 'react';
-import RESULTADO from './RESULTADO.PNG';
+import RESULTADO from '../../Resources/Images/RESULTADO.PNG';
+
 
 // styles
 import './styleForms.css'

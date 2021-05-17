@@ -1,75 +1,55 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
+import axios from 'axios';
+
 // styles
 import './styleForms.css'
 
-
+// constants
+import { BACKEND_URL } from '../../Constants/constants.js';
 
 function GeneReport() {
 
 
-    // const values
-    const categories = {
-        'Académica':[
-            'Asignatura de pregrado', 'Proyecto de investigación', 'Extensión', 'Participación en redes académicas de cooperación internacional',
-            'Producción académica','Profesor invitado','Movilidad nacional/internacional','EgresaParticipación en eventos nacionales o internacionalesdos',
-            'Talleres, seminarios y otros eventos', 'Promoción del programa', 'Dirección de trabajo de grado', 'Jurado de tesis de grado',
-            'Dirección de trabajo de grado', 'Proyección social'
-            ],
-
-        'Profesional': ['Premios o reconocimientos', 'Certificación', 'Patentes', 'Registro de software'],
-        
-        'Gestion': ['Permanencia y retención', 'Gestión del programa académico'],
-    }
-    const typeData = {
-        AAA1: {
-            aaa11: 'aaa11',
-            aaa12: 'aaa12',
-        },
-        AAA2: {
-            aaa21: 'aaa21',
-            aaa22: 'aaa22',
-        },
-        AAA3: {
-            aaa31: 'aaa31',
-            aaa32: 'aaa32',
-        },
-        AAA4: {
-            aaa41: 'aaa41',
-            aaa42: 'aaa42',
-        },
-        PPP1: {
-            ppp11: 'ppp11',
-            ppp12: 'ppp12',
-        },
-        PPP2: {
-            ppp21: 'ppp21',
-            ppp22: 'ppp22',
-        },
-        PPP3: {
-            ppp31: 'ppp31',
-            ppp32: 'ppp32',
-        },
-        PPP4: {
-            ppp41: 'ppp41',
-            ppp42: 'ppp42',
-        },
-    }
-    const categoryValues = Object.keys(categories);
+    // const values  
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
 
     // component state
-    const [title, setTItle] = useState("");
-    const [category, setCategory] = useState(categoryValues[0]);
-    const [activityType, setActivityType] = useState(categories[category][0]);
+    const [categories, setCategories] = useState({});
+    const [typeData, setTypeData] = useState({});
+
+    const [category, setCategory] = useState([]);
+    const [activityType, setActivityType] = useState('');
     const [startPeriod, setStartPeriod] = useState(periods[0]);
     const [finishPeriod, setFinishPeriod] = useState(periods[0]);
 
- 
+
+    const [autor, setAutor] = React.useState('');
+    const [legend, setLegend] = React.useState('');
+    const [errorAutor, seterrorAutor] = React.useState(false);
+    
+    // get activities categories from backend (ONLY ON COMPONENT MOUNT)
+    useEffect( () => {
+        axios.get(`${BACKEND_URL}/categories`)
+        .then((response) => {
+            let categories = response.data;
+            setCategories(categories);
+            const categoryValues = Object.keys(categories);
+            const activityType = Object.values(categories)[0][0];
+            setCategory(categoryValues[0]);
+            setActivityType(activityType);
+            // get type data from backend
+            axios.get(`${BACKEND_URL}/typedata`)
+            .then((response) => {
+                let typeData = response.data;
+                setTypeData(typeData);
+            })
+        })
+    }, []);
 
     // get menu items for a select control
     const getMenuItems = (array) => {
@@ -117,7 +97,7 @@ function GeneReport() {
             <Grid container spacing={2} alignItems="center" justify="center">
                 <Grid item xs={12}>
                     {/* categoría de la actividad */}
-                    <TextField
+                    <TextField 
                         id="Category"
                         select
                         label="Categoría de la actividad"
@@ -126,7 +106,7 @@ function GeneReport() {
                         onChange={handleCategory}
                         fullWidth
                     >
-                        {getMenuItems(categoryValues)}
+                        {getMenuItems(Object.keys(categories))}
                     </TextField>
                 </Grid>
                 <Grid item xs={12}>
@@ -140,10 +120,10 @@ function GeneReport() {
                         fullWidth
                         onChange={(event) => { handleActivityType(event.target.value) }}
                     >
-                        {getMenuItems(categories[category])}
+                        {getMenuItems(categories[category] || [])}
                     </TextField>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     {/* periodo académico de inicio */}
                     <TextField
                         id="startPeriod"
@@ -157,7 +137,7 @@ function GeneReport() {
                         {getMenuItems(periods)}
                     </TextField>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     {/* periodo académico de finalización */}
                     <TextField
                         id="finalPeriod"
@@ -173,13 +153,35 @@ function GeneReport() {
                 </Grid>
                 <Grid item xs={12}>
                     {/* autor de actividad */}
-                    <TextField
-                        id="title"
-                        label="Título"
-                        variant="outlined"
-                        onChange={handleChange(setTItle)}
-                        fullWidth
-                    />
+                    <TextField 
+                    //validacion
+                    onChange = {(e) => {
+                        setAutor(e.target.value);
+                        if(autor.length > 30 ){
+                          seterrorAutor(true);
+                          setLegend("El nombre del autor contiene maximo de 32 caracteres. Ejemplo: Wilson Arias o Juan Manuel");
+                        }
+
+                        else if(autor === ''){
+                          seterrorAutor(true);
+                          setLegend("El nombre del autor no puede ir con un caracter");
+                        }
+                         
+                        else if(autor === "[0-1000]"){
+                          seterrorAutor(true);
+                          setLegend("No se admiten numeros")
+                        }
+
+                        else{
+                          seterrorAutor(false);
+                          setLegend("");
+                        }
+                      }}
+                      error = {errorAutor}
+                      label="Autor"
+                      helperText = {legend}
+                      fullWidth
+                      variant="outlined" />
                 </Grid>
 
                 <Grid container direction="row" justify="flex-end">
