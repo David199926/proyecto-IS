@@ -9,7 +9,7 @@ export default function ResultReport (){
 
     return(
         <div className="resultR">
-            <img src={RESULTADO} alt="Imagen resultado consulta" />
+            <img src={RESULTADO} alt="Imagen resultado consulta" Style={ 'padding-left: 29px' } />
         </div>
     )
 }
