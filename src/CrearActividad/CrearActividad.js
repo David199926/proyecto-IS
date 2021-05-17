@@ -190,7 +190,26 @@ function CrearActividad() {
 
     // create activity
     const createActivity = () => {
-        window.location = "/";
+         const activity = {
+            'title': title,
+            'visibility' : visibility,
+            'category' : category,
+            'activityType' : activityType,
+            'progress' : progress,
+            'startPeriod' : startPeriod,
+            'finishPeriod' : finishPeriod,
+            'description' : description,
+            'interests' : interests,
+            'activityData': activityData,
+            'interestsAvailable' : interestsAvailable
+            }
+
+        const response = await fetch('http://localhost:4000/new-activity',
+            {
+                method: 'POST', body: JSON.stringify(activity),headers: {
+                    'Content-Type': 'application/json', 'Accept': 'application/json'
+                }
+            });
     }
 
     return (
