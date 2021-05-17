@@ -18,7 +18,7 @@ import './CrearActividad.css';
 import { BACKEND_URL } from '../Constants/constants.js';
 
 function CrearActividad() {
-  
+
     const visibilityValues = ['pública', 'privada'];
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
     const interestValues = ['interes1', 'interes2'];
@@ -44,23 +44,23 @@ function CrearActividad() {
     // component effects
 
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
-    useEffect( () => {
+    useEffect(() => {
         axios.get(`${BACKEND_URL}/categories`)
-        .then((response) => {
-            let categories = response.data;
-            setCategories(categories);
-            const categoryValues = Object.keys(categories);
-            const activityType = Object.values(categories)[0][0];
-            setCategory(categoryValues[0]);
-            setActivityType(activityType);
-            // get type data from backend
-            axios.get(`${BACKEND_URL}/typedata`)
             .then((response) => {
-                let typeData = response.data;
-                setTypeData(typeData);
-                setActivityData(typeData[activityType]);
+                let categories = response.data;
+                setCategories(categories);
+                const categoryValues = Object.keys(categories);
+                const activityType = Object.values(categories)[0][0];
+                setCategory(categoryValues[0]);
+                setActivityType(activityType);
+                // get type data from backend
+                axios.get(`${BACKEND_URL}/typedata`)
+                    .then((response) => {
+                        let typeData = response.data;
+                        setTypeData(typeData);
+                        setActivityData(typeData[activityType].fields);
+                    })
             })
-        })
     }, []);
 
     // get activity data
@@ -116,6 +116,20 @@ function CrearActividad() {
         )
     }
 
+    const checkIfNeedsFile = () => {
+        if (!activityData["needsFile"]) return null;
+        return (
+            <div>
+                <h2>Archivos de la actividad</h2>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <UploadFile file={file} setFile={setFile} />
+                    </Grid>
+                </Grid>
+            </div>
+        )
+    }
+
     // get periods after initial periods
     const getSubsequentPeriods = () => {
         let availablePeriods = periods.filter((period) => {
@@ -143,7 +157,7 @@ function CrearActividad() {
     // type change produces activity data change
     const handleActivityType = (value) => {
         setActivityType(value);
-        setActivityData(typeData[value] || {});
+        setActivityData(typeData[value].fields || {});
     }
     // handle interest input
     const pushInterest = (event, newValue) => {
@@ -288,12 +302,7 @@ function CrearActividad() {
             </Grid>
 
             {/* archivos de actividad */}
-            <h2>Archivos de la actividad</h2>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <UploadFile file={file} setFile={setFile} />
-                </Grid>
-            </Grid>
+            {checkIfNeedsFile()}
 
             {/* colaboradores de actividad */}
             <h2>Colaboradores</h2>
