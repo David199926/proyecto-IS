@@ -10,23 +10,6 @@ const getAllCategories = async () => {
     return results;
 }
 
-//obtener todas las categorias y tipos
-const getAllCategoriesAndTypes = async () => {
-    const results = [];
-
-    const catRef = db.collection('categorias');
-    
-    snapshot.forEach((doc)=>{
-        doc.collection('tipos').get()
-        .then((snapshot) => {
-            results.push({...doc.data(), id: doc.id, tipos: snapshot});
-        })
-        
-    })
-    return results;
-}
-
 module.exports = {
     getAllCategories,
-    getAllCategoriesAndTypes
 }
