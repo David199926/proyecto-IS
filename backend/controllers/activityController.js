@@ -1,4 +1,4 @@
-categoriasModel = require('../models/categoriasModel');
+const categoriasModel = require('../models/categoriasModel');
 
 const getCategoriesAndTypes = (req, res) => {
 

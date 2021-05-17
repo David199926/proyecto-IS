@@ -21,12 +21,12 @@ function CrearActividad() {
 
     const visibilityValues = ['pública', 'privada'];
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
-    const interestValues = ['interes1', 'interes2'];
 
     // component state
     const [categories, setCategories] = useState({});
     const [typeData, setTypeData] = useState({});
 
+    // activity common data
     const [title, setTItle] = useState('');
     const [visibility, setVisibility] = useState(visibilityValues[0]);
     const [category, setCategory] = useState([]);
@@ -35,11 +35,18 @@ function CrearActividad() {
     const [startPeriod, setStartPeriod] = useState(periods[0]);
     const [finishPeriod, setFinishPeriod] = useState(periods[0]);
     const [description, setDescription] = useState('Esta es una descripción');
+
+    // activitys interests
     const [interests, setInterests] = useState([]);
-    const [activityData, setActivityData] = useState({});
-    const [file, setFile] = useState(null);
-    const [interestsAvailable, setInterestsAvailable] = useState(interestValues)
+    const [interestsAvailable, setInterestsAvailable] = useState([])
     const [inputValues, setInputvalues] = useState([]);
+
+    // activity data
+    const [activityData, setActivityData] = useState({});
+    // activity file
+    const [file, setFile] = useState(null);
+    
+    
 
     // component effects
 
@@ -63,6 +70,11 @@ function CrearActividad() {
                 // set activity type data
                 setActivityData(typeData[activityType].campos);
             })
+    }, []);
+    // get interests from backend (ONLY ON COMPONENT MOUNT)
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/interests`)
+            .then(({ data }) => { setInterestsAvailable(data) })
     }, []);
 
     // draws activitys type data inputs
@@ -121,7 +133,7 @@ function CrearActividad() {
     // draws file input component if needed
     const checkIfNeedsFile = () => {
         if (activityType === '') return null;
-        if (typeData[activityType].requiereArchivo) return null;
+        if (!typeData[activityType].requiereArchivo) return null;
         return (
             <div>
                 <h2>Archivos de la actividad</h2>
