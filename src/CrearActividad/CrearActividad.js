@@ -133,11 +133,7 @@ function CrearActividad() {
     // draws file input component if needed
     const checkIfNeedsFile = () => {
         if (activityType === '') return null;
-<<<<<<< HEAD
-        if (typeData[activityType].requiereArchivo) return null;
-=======
         if (!typeData[activityType].requiereArchivo) return null;
->>>>>>> dbPruebas
         return (
             <div>
                 <h2>Archivos de la actividad</h2>

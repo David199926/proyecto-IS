@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-categoriasModel = require('../models/categoriasModel');
-=======
 const categoriasModel = require('../models/categoriasModel');
->>>>>>> dbPruebas
 
 const getCategoriesAndTypes = (req, res) => {
 
