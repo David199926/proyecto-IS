@@ -45,25 +45,27 @@ function CrearActividad() {
 
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/categories`)
-            .then((response) => {
-                let categories = response.data;
-                setCategories(categories);
+        axios.get(`${BACKEND_URL}/categories-types`)
+            .then(({ data }) => {
+                const typeData = data.typeData;
+                const categories = data.formatedCategories;
                 const categoryValues = Object.keys(categories);
+
+                // set all categories and typedata
+                setCategories(categories);
+                setTypeData(typeData);
+
+                // set component category and type
                 const activityType = Object.values(categories)[0][0];
                 setCategory(categoryValues[0]);
                 setActivityType(activityType);
-                // get type data from backend
-                axios.get(`${BACKEND_URL}/typedata`)
-                    .then((response) => {
-                        let typeData = response.data;
-                        setTypeData(typeData);
-                        setActivityData(typeData[activityType].fields);
-                    })
+
+                // set activity type data
+                setActivityData(typeData[activityType].campos);
             })
     }, []);
 
-    // get activity data
+    // draws activitys type data inputs
     const getTypeDataInput = () => {
         return (
             <Grid container spacing={2}>
@@ -116,8 +118,10 @@ function CrearActividad() {
         )
     }
 
+    // draws file input component if needed
     const checkIfNeedsFile = () => {
-        if (!activityData["needsFile"]) return null;
+        if (activityType === '') return null;
+        if (typeData[activityType].requiereArchivo) return null;
         return (
             <div>
                 <h2>Archivos de la actividad</h2>
@@ -157,7 +161,7 @@ function CrearActividad() {
     // type change produces activity data change
     const handleActivityType = (value) => {
         setActivityType(value);
-        setActivityData(typeData[value].fields || {});
+        setActivityData(typeData[value].campos || {});
     }
     // handle interest input
     const pushInterest = (event, newValue) => {
