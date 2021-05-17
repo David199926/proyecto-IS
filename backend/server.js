@@ -16,16 +16,13 @@ app.use(express.urlencoded({ extended: false}));
 
 // auth user in login
 app.post('/validate', logInController.validate);
-// get activities categories and types
-app.get('/categories', activityController.getCategoriesAndTypes);
-// get activities types data
-app.get('/typedata', activityController.getActivityTypeData);
+// get categories and typeData from db
+app.get('/categories-types', activityController.getCategoriesAndTypes);
 
 //devuelve un JSON con todos los datos de la actividad
 app.get('/actividad-foranea' , actividadForanea.getActividad );
 
 
-app.get('/prueba', activityController.getCategoriesAndTypes)
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
