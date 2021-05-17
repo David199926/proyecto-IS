@@ -5,11 +5,10 @@ import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import {  createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Progress from './Progress/Progress';
 import UploadFile from './UploadFile/UploadFile';
-import AppBarDrawer from '../AppBarDrawer/AppBarDrawer';
 
 import axios from 'axios';
 
@@ -20,7 +19,7 @@ import './EditarActividad.css';
 import { BACKEND_URL } from '../Constants/constants.js';
 
 function EditarActividad() {
-  
+
     const visibilityValues = ['pública', 'privada'];
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
     const interestValues = ['interes1', 'interes2'];
@@ -44,33 +43,34 @@ function EditarActividad() {
     const [inputValues, setInputvalues] = useState([]);
 
     const theme = createMuiTheme({
-        palette:{
-          primary:{
-            main:'#ffd413'
-          }
-      }});
-      
- 
+        palette: {
+            primary: {
+                main: '#ffd413'
+            }
+        }
+    });
+
+
     // component effects
 
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
-    useEffect( () => {
+    useEffect(() => {
         axios.get(`${BACKEND_URL}/categories`)
-        .then((response) => {
-            let categories = response.data;
-            setCategories(categories);
-            const categoryValues = Object.keys(categories);
-            const activityType = Object.values(categories)[0][0];
-            setCategory(categoryValues[0]);
-            setActivityType(activityType);
-            // get type data from backend
-            axios.get(`${BACKEND_URL}/typedata`)
             .then((response) => {
-                let typeData = response.data;
-                setTypeData(typeData);
-                setActivityData(typeData[activityType]);
+                let categories = response.data;
+                setCategories(categories);
+                const categoryValues = Object.keys(categories);
+                const activityType = Object.values(categories)[0][0];
+                setCategory(categoryValues[0]);
+                setActivityType(activityType);
+                // get type data from backend
+                axios.get(`${BACKEND_URL}/typedata`)
+                    .then((response) => {
+                        let typeData = response.data;
+                        setTypeData(typeData);
+                        setActivityData(typeData[activityType]);
+                    })
             })
-        })
     }, []);
 
     // get activity data
@@ -174,8 +174,6 @@ function EditarActividad() {
     }
 
     return (
-        <div>
-            <AppBarDrawer   />
         <div className="main-container">
             <h1>Editar actividad</h1>
             <Grid container spacing={2}>
@@ -312,16 +310,15 @@ function EditarActividad() {
             <span>Crea la actividad antes de invitar colaboradores</span>
             <Grid container direction="row" justify="flex-end">
                 <ThemeProvider theme={theme}>
-                <Fab
-                    variant="extended"
-                    color="primary"
-                    onClick={createActivity}
-                >
-                    Confirmar
+                    <Fab
+                        variant="extended"
+                        color="primary"
+                        onClick={createActivity}
+                    >
+                        Confirmar
                 </Fab>
                 </ThemeProvider>
             </Grid>
-            </div>
         </div>
     )
 }

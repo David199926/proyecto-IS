@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
+
+// Material UI
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+// alert message
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import Progress from './Progress/Progress';
 import UploadFile from './UploadFile/UploadFile';
@@ -25,15 +30,17 @@ function CrearActividad() {
     // component state
     const [categories, setCategories] = useState({});
     const [typeData, setTypeData] = useState({});
+    const [open, setOpen] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState("success");
 
     // activity common data
-    const [title, setTItle] = useState('');
+    const [title, setTitle] = useState('');
     const [visibility, setVisibility] = useState(visibilityValues[0]);
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState('');
     const [activityType, setActivityType] = useState('');
     const [progress, setProgress] = useState(0);
     const [startPeriod, setStartPeriod] = useState(periods[0]);
-    const [finishPeriod, setFinishPeriod] = useState(periods[0]);
+    const [finishPeriod, setFinishPeriod] = useState('');
     const [description, setDescription] = useState('Esta es una descripción');
 
     // activitys interests
@@ -45,8 +52,6 @@ function CrearActividad() {
     const [activityData, setActivityData] = useState({});
     // activity file
     const [file, setFile] = useState(null);
-    
-    
 
     // component effects
 
@@ -76,6 +81,8 @@ function CrearActividad() {
         axios.get(`${BACKEND_URL}/interests`)
             .then(({ data }) => { setInterestsAvailable(data) })
     }, []);
+
+    // behaviors
 
     // draws activitys type data inputs
     const getTypeDataInput = () => {
@@ -187,29 +194,49 @@ function CrearActividad() {
         setInterests((interests) => interests.filter((interest) => interest !== chipToDelete));
         setInterestsAvailable([...interestsAvailable, chipToDelete]);
     };
+    // handle close SnackBar
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') return;
+        setOpen(false);
+    };
+
+    // clean activity data
+    const cleanActivityData = () => {
+        setTitle('');
+        setVisibility(visibilityValues[0]);
+        setCategory('');
+        setActivityType('');
+        setProgress(0);
+        setStartPeriod(periods[0]);
+        setFinishPeriod('');
+        setDescription('Esta es una descripción');
+        setInterests([]);
+        setActivityData(typeData[activityType].campos);
+    }
 
     // create activity
     const createActivity = () => {
-         const activity = {
-            'title': title,
-            'visibility' : visibility,
-            'category' : category,
-            'activityType' : activityType,
-            'progress' : progress,
-            'startPeriod' : startPeriod,
-            'finishPeriod' : finishPeriod,
-            'description' : description,
-            'interests' : interests,
-            'activityData': activityData,
-            'interestsAvailable' : interestsAvailable
-            }
-
-        const response = await fetch('http://localhost:4000/new-activity',
-            {
-                method: 'POST', body: JSON.stringify(activity),headers: {
-                    'Content-Type': 'application/json', 'Accept': 'application/json'
-                }
-            });
+        const activity = {
+            title,
+            visibility,
+            category,
+            activityType,
+            progress,
+            startPeriod,
+            finishPeriod,
+            description,
+            interests,
+            activityData,
+            interestsAvailable,
+        }
+        // submits activity
+        axios.post(`${BACKEND_URL}/new-activity`, activity)
+            .then(({ data }) => {
+                const { status } = data;
+                setOpen(true);
+                setSubmitStatus(status === 'ok' ? 'success' : 'error');
+                if (status) cleanActivityData();
+            })
     }
 
     return (
@@ -223,7 +250,7 @@ function CrearActividad() {
                         label="Título"
                         value={title}
                         variant="outlined"
-                        onChange={handleChange(setTItle)}
+                        onChange={handleChange(setTitle)}
                         fullWidth
                     />
                 </Grid>
@@ -342,6 +369,8 @@ function CrearActividad() {
             {/* colaboradores de actividad */}
             <h2>Colaboradores</h2>
             <span>Crea la actividad antes de invitar colaboradores</span>
+
+            {/* subir actividad */}
             <Grid container direction="row" justify="flex-end">
                 <Fab
                     variant="extended"
@@ -350,6 +379,15 @@ function CrearActividad() {
                 >
                     Confirmar
                 </Fab>
+                <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={submitStatus}>
+                        {
+                            submitStatus === "success" ?
+                                "Se ha subido la actividad con éxito" :
+                                "Ocurrió un problema, inténtalo más tarde"
+                        }
+                    </Alert>
+                </Snackbar>
             </Grid>
         </div>
     )

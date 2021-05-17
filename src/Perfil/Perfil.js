@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import AppBarDrawer from '../AppBarDrawer/AppBarDrawer';
+import AppBarDrawer from '../commonComponents/AppBarDrawer/AppBarDrawer';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import perfil from '../Resources/Images/perfil.png'
 

@@ -10,47 +10,49 @@ import { ActividadForanea } from './actividadForanea/ActividadForanea';
 
 function App() {
   return (
-  
+
     <Router>
       <Router>
         <Route path="/" exact>
-          <LogIn/>
+          <LogIn />
         </Route>
       </Router>
 
       <Router>
-          <Route path="/crear">
-           <AppBarDrawer/>
-            <CrearActividad />
-          </Route>
+        <Route path="/crear">
+          <AppBarDrawer />
+          <CrearActividad />
+        </Route>
       </Router>
 
       <Router>
         <Route path="/editar">
-          <AppBarDrawer/>
+          <AppBarDrawer />
           <EditarActividad />
         </Route>
       </Router>
-      
+
       <Router>
         <Route path="/personalizado">
-          <AppBarDrawerDirector/>
+          <AppBarDrawerDirector />
           <ReportePersonalizado />
         </Route>
       </Router>
 
       <Router>
         <Route path="/perfil">
-          <AppBarDrawer/>
+          <AppBarDrawer />
           <Perfil />
         </Route>
       </Router>
+
       <Router>
         <Route path="/foranea">
           <ActividadForanea />
         </Route>
       </Router>
-      </Router>
+
+    </Router>
 
   );
 }

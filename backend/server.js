@@ -5,7 +5,6 @@ const logInController = require('./controllers/logInController');
 const activityController = require('./controllers/activityController');
 const interestsController = require('./controllers/interestsController');
 const actividadForanea = require('./controllers/actividadForanea');
-const createActivity = require('./controllers/createActivityController');
 
 require('dotenv').config();
 
@@ -25,7 +24,7 @@ app.get('/interests', interestsController.getInterests);
 //devuelve un JSON con todos los datos de la actividad
 app.get('/actividad-foranea' , actividadForanea.getActividad );
 //sube la actividad a la base de datos
-app.post('/new-activity', createActivity.createActivity);
+app.post('/new-activity', activityController.createActivity);
 
 
 app.listen(port, () => {
