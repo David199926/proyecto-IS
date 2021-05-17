@@ -14,17 +14,17 @@ const theme = createMuiTheme({
 
 function Report() {
   return (
-    <div className="container" Style={ 'padding-top: 60px'} >
-      <h1 Style={ 'margin-left: 330px'} >Reporte personalizado</h1>
+    <div className="container" Style={ 'padding-top: 50px'} >
+      <h1  >Reporte personalizado</h1>
       
-        <div clasName="r" Style={ 'margin-left: 330px'}>
+        <div >
         <ThemeProvider theme={theme}>
             <GeneReport/> 
            
             <div>
             
                 <ResultReport/>
-                <div Style={" padding-left: 500px  "  }>
+                <div Style={" padding-left: 380px  "  }>
                     <ExportReport />
                 </div>
             </div>
