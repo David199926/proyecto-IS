@@ -139,7 +139,7 @@ export default function AppBarDrawer() {
         <Toolbar />
         <div className={classes.drawerContainer}>
          <List>
-         <ListItem button>
+         <ListItem button onClick={() => window.location = '/personalizado'}>
              <ListItemIcon>
                <AssessmentIcon />
              </ListItemIcon>
@@ -151,7 +151,7 @@ export default function AppBarDrawer() {
              </ListItemIcon>
              <ListItemText primary={'Colaboraciones'} />
            </ListItem>
-           <ListItem button>
+           <ListItem button onClick={() => window.location = '/crear'}>
              <ListItemIcon>
                <AssignmentIcon />
              </ListItemIcon>

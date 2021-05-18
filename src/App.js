@@ -20,14 +20,14 @@ function App() {
 
       <Router>
         <Route path="/crear">
-          <AppBarDrawer />
+        <AppBarDrawerDirector />
           <CrearActividad />
         </Route>
       </Router>
 
       <Router>
         <Route path="/editar">
-          <AppBarDrawer />
+        <AppBarDrawerDirector />
           <EditarActividad />
         </Route>
       </Router>
@@ -41,7 +41,7 @@ function App() {
 
       <Router>
         <Route path="/perfil">
-          <AppBarDrawer />
+        <AppBarDrawerDirector />
           <Perfil />
         </Route>
       </Router>
