@@ -119,8 +119,12 @@ export default function AppBarDrawer() {
                 }}
                 open={open}
                 onClose={handleClose} >
-                <MenuItem onClick={handleClose}><a className={classes.Link} href="/perfil">Ver perfil</a></MenuItem>
-                <MenuItem onClick={handleClose}><a  href="/" className={classes.Link} >Cerrar sesión</a></MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a href="/perfil" className={classes.Link}>Ver perfil</a>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a  href="/" className={classes.Link} >Cerrar sesión</a>
+                </MenuItem>
              </Menu>
 
           </div>

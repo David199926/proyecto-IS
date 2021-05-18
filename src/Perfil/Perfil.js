@@ -91,8 +91,7 @@ const pushInterest = (event, newValue) => {
   return (
    
     <div className={classes.root}>      
-     {/* AppBar y Drawer */}
-     <AppBarDrawer   />
+     
 
       <div className="container" Style={ 'padding-top: 110px'} >
         {/* foto de perfil*/}

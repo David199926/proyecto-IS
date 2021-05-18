@@ -117,8 +117,12 @@ export default function AppBarDrawer() {
                 }}
                 open={open}
                 onClose={handleClose} >
-                <MenuItem onClick={handleClose}><a  href="/perfil" className={classes.Link}>Ver perfil</a></MenuItem>
-                <MenuItem onClick={handleClose}><a  href="/" className={classes.Link} >Cerrar sesión</a></MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a  href="/perfil" className={classes.Link}>Ver perfil</a>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a  href="/" className={classes.Link} >Cerrar sesión</a>
+                </MenuItem>
              </Menu>
 
           </div>
@@ -139,7 +143,7 @@ export default function AppBarDrawer() {
              </ListItemIcon>
              <ListItemText primary={'Colaboraciones'} />
            </ListItem>
-           <ListItem button>
+           <ListItem button onClick={() => window.location = '/crear'}>
              <ListItemIcon>
                <AssignmentIcon />
              </ListItemIcon>
