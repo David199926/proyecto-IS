@@ -20,8 +20,8 @@ function GeneReport() {
 
     // component state
     const [categories, setCategories] = useState({});
-    const [typeData, setTypeData] = useState({});
 
+    // activity common data
     const [category, setCategory] = useState([]);
     const [activityType, setActivityType] = useState('');
     const [startPeriod, setStartPeriod] = useState(periods[0]);
@@ -33,22 +33,20 @@ function GeneReport() {
     const [errorAutor, seterrorAutor] = React.useState(false);
     
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
-    useEffect( () => {
-        axios.get(`${BACKEND_URL}/categories`)
-        .then((response) => {
-            let categories = response.data;
-            setCategories(categories);
-            const categoryValues = Object.keys(categories);
-            const activityType = Object.values(categories)[0][0];
-            setCategory(categoryValues[0]);
-            setActivityType(activityType);
-            // get type data from backend
-            axios.get(`${BACKEND_URL}/typedata`)
-            .then((response) => {
-                let typeData = response.data;
-                setTypeData(typeData);
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/categories-types`)
+            .then(({ data }) => {
+                const categories = data.formatedCategories;
+                const categoryValues = Object.keys(categories);
+
+                // set all categories and typedata
+                setCategories(categories);
+
+                // set component category and type
+                const activityType = Object.values(categories)[0][0];
+                setCategory(categoryValues[0]);
+                setActivityType(activityType);
             })
-        })
     }, []);
 
     // get menu items for a select control
