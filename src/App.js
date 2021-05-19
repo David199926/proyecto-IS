@@ -20,8 +20,9 @@ function App() {
 
       <Router>
         <Route path="/crear">
-        <AppBarDrawerDirector />
-          <CrearActividad />
+        <AppBarDrawerDirector>
+          <CrearActividad/>
+        </AppBarDrawerDirector>
         </Route>
       </Router>
 

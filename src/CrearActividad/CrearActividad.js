@@ -240,7 +240,7 @@ function CrearActividad() {
     }
 
     return (
-        <div className="main-container">
+        <div className="main-container-crear">
             <h1>Crear actividad</h1>
             <Grid container spacing={2}>
                 <Grid item xs={8}>
