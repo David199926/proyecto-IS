@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 // alert message
 import Snackbar from '@material-ui/core/Snackbar';
@@ -243,7 +243,7 @@ function CrearActividad() {
         <div className="main-container-crear">
             <h1>Crear actividad</h1>
             <Grid container spacing={2}>
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={8}>
                     {/* titulo de la actividad */}
                     <TextField
                         id="title"
@@ -254,7 +254,7 @@ function CrearActividad() {
                         fullWidth
                     />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={4}>
                     {/* visibilidad de la actividad */}
                     <TextField
                         id="visibility"
@@ -268,7 +268,7 @@ function CrearActividad() {
                         {getMenuItems(visibilityValues)}
                     </TextField>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={4}>
                     {/* categoría de la actividad */}
                     <TextField
                         id="Category"
@@ -282,7 +282,7 @@ function CrearActividad() {
                         {getMenuItems(Object.keys(categories))}
                     </TextField>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={8}>
                     {/* tipos de actividad */}
                     <TextField
                         id="Types"
@@ -297,12 +297,12 @@ function CrearActividad() {
                     </TextField>
                 </Grid>
                 <Grid item xs={12}>
-                    <Grid item xs={8}>
+                    <Grid item xs={12} md={8}>
                         {/* progreso de actividad */}
                         <Progress progress={progress} setProgress={setProgress} />
                     </Grid>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     {/* periodo académico de inicio */}
                     <TextField
                         id="startPeriod"
@@ -316,7 +316,7 @@ function CrearActividad() {
                         {getMenuItems(periods)}
                     </TextField>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     {/* periodo académico de finalización */}
                     <TextField
                         id="finalPeriod"
@@ -362,33 +362,34 @@ function CrearActividad() {
             <Grid container spacing={2}>
                 {getTypeDataInput()}
             </Grid>
-
+            <br />
             {/* archivos de actividad */}
             {checkIfNeedsFile()}
 
             {/* colaboradores de actividad */}
-            <h2>Colaboradores</h2>
-            <span>Crea la actividad antes de invitar colaboradores</span>
-
+            <div className="colabs">
+                <h2>Colaboradores</h2>
+                <span>Crea la actividad antes de invitar colaboradores</span>
+            </div>
+            
             {/* subir actividad */}
-            <Grid container direction="row" justify="flex-end">
-                <Fab
-                    variant="extended"
-                    color="primary"
-                    onClick={createActivity}
-                >
-                    Confirmar
-                </Fab>
-                <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity={submitStatus}>
-                        {
-                            submitStatus === "success" ?
-                                "Se ha subido la actividad con éxito" :
-                                "Ocurrió un problema, inténtalo más tarde"
-                        }
-                    </Alert>
-                </Snackbar>
-            </Grid>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={createActivity}
+            >
+                Confirmar
+                </Button>
+            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={submitStatus}>
+                    {
+                        submitStatus === "success" ?
+                            "Se ha subido la actividad con éxito" :
+                            "Ocurrió un problema, inténtalo más tarde"
+                    }
+                </Alert>
+            </Snackbar>
+
         </div>
     )
 }
