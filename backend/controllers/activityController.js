@@ -35,15 +35,16 @@ const getCategoriesAndTypes = (req, res) => {
 const createActivity = async (req, res) => {
     const activity = {
         "título": req.body.title,
-        "visibilidad": req.body.visibility,
+        "progreso": req.body.progress,
+        "pública": req.body.visibility === "pública",
         "categoría": req.body.category,
         "tipo": req.body.activityType,
-        "progreso": req.body.progress,
         "periodo de inicio": req.body.startPeriod,
         "periodo de finalización": req.body.finishPeriod,
         "descripción": req.body.description,
-        "intereses": req.body.interests,
-        "campos": req.body.activityData,
+        "datos tipo": req.body.activityData,
+        "colaboradores": [],
+        "temas relacionados": req.body.interests,
     }
 
     activityModel.uploadActivity(activity)

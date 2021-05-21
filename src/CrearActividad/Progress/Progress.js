@@ -16,9 +16,11 @@ export default function Progress({ progress, setProgress }) {
                     max={100}
                     min={0}
                     onChange={(e) => { setProgress(parseInt(e.target.value)); }}
+                    id="progress-input"
                     InputProps={{
                         endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                        inputProps: { min: 0, max: 100 }
+                        inputProps: { min: 0, max: 100 },
+                        name: "progress-textfield"
                     }}
                 />
             </div>

@@ -57,7 +57,9 @@ function CrearActividad() {
 
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/categories-types`)
+        const source = axios.CancelToken.source();
+
+        axios.get(`${BACKEND_URL}/categories-types`, {cancelToken: source.token})
             .then(({ data }) => {
                 const typeData = data.typeData;
                 const categories = data.formatedCategories;
@@ -75,11 +77,18 @@ function CrearActividad() {
                 // set activity type data
                 setActivityData(typeData[activityType].campos);
             })
+            .catch(err => {
+                if (!axios.isCancel(err)) console.log(err);
+            })
+        return () => source.cancel();
     }, []);
     // get interests from backend (ONLY ON COMPONENT MOUNT)
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/interests`)
+        const source = axios.CancelToken.source();
+
+        axios.get(`${BACKEND_URL}/interests`, {cancelToken: source.token})
             .then(({ data }) => { setInterestsAvailable(data) })
+        return () => source.cancel();
     }, []);
 
     // behaviors
@@ -98,6 +107,7 @@ function CrearActividad() {
                                     variant="outlined"
                                     fullWidth
                                     value={value}
+                                    InputProps={{required: true}}
                                     onChange={(event) => {
                                         setActivityData({ ...activityData, [label]: event.target.value })
                                     }}
@@ -116,7 +126,8 @@ function CrearActividad() {
             <MenuItem key={index} value={option}>
                 {option}
             </MenuItem>
-        )))
+        ))
+        )
     }
 
     // get insterest chips
@@ -215,7 +226,8 @@ function CrearActividad() {
     }
 
     // create activity
-    const createActivity = () => {
+    const createActivity = (event) => {
+        event.preventDefault();
         const activity = {
             title,
             visibility,
@@ -240,7 +252,7 @@ function CrearActividad() {
     }
 
     return (
-        <div className="main-container-crear">
+        <form className="main-container-crear" onSubmit={createActivity}>
             <h1>Crear actividad</h1>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={8}>
@@ -250,6 +262,7 @@ function CrearActividad() {
                         label="Título"
                         value={title}
                         variant="outlined"
+                        InputProps={{required: true}}
                         onChange={handleChange(setTitle)}
                         fullWidth
                     />
@@ -299,7 +312,11 @@ function CrearActividad() {
                 <Grid item xs={12}>
                     <Grid item xs={12} md={8}>
                         {/* progreso de actividad */}
-                        <Progress progress={progress} setProgress={setProgress} />
+                        <Progress
+                            progress={progress}
+                            setProgress={setProgress}
+                            id="progress"
+                        />
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
@@ -339,6 +356,7 @@ function CrearActividad() {
                         variant="outlined"
                         multiline
                         rows={4}
+                        InputProps={{required: true}}
                         fullWidth
                         onChange={handleChange(setDescription)}
                     />
@@ -376,10 +394,10 @@ function CrearActividad() {
             <Button
                 variant="contained"
                 color="primary"
-                onClick={createActivity}
+                type="submit"
             >
                 Confirmar
-                </Button>
+            </Button>
             <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={submitStatus}>
                     {
@@ -389,8 +407,7 @@ function CrearActividad() {
                     }
                 </Alert>
             </Snackbar>
-
-        </div>
+        </form>
     )
 }
 
