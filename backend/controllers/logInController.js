@@ -1,17 +1,16 @@
-// const db = require('../models/dbConection');
+const docenteModel = require('../models/docenteModel');
 
 const validate = (req, res) => {
-    const {username, password} = req.body;
     // err index
     // 0 => unregistered user
-    // 1 => wrong password
-    if (username !== "Bruno") {
-        res.json({error: 0});
-    }
-    if (password !== "123") {
-        res.json({error: 1});
-    }
-    res.json({error: null});
+    // 1 => wrong password 
+    const {username, password} = req.body;
+    docenteModel.getUser(username)
+    .then((user) => {
+        if (user == null) res.json({error: 0}); 
+        if (user.contrasena != password) res.json({error: 1});
+        res.json({error: null, user: user});
+    })
 }
 
 module.exports = {
