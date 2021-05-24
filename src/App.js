@@ -51,6 +51,12 @@ function App() {
           <ActividadForanea />
         </Route>
       </Router>
+    
+       <Router>
+        <Route path="/mis-actividades">
+          <MisActividades />
+        </Route>
+      </Router>
 
     </Router>
 
