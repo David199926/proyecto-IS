@@ -1,27 +1,10 @@
 import React , {useEffect ,useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { Typography } from '@material-ui/core';
-
+import MaterialTable from 'material-table'
 import {EditarActividad } from './EditarActividad';
 import {EliminarActividad } from './EliminarActividad';
 
 export const ActividadesAcademicas = () => {
     
-  const useStyles = makeStyles({
-    table: {
-      minWidth: 650,
-    },
-  });
-
-  const classes = useStyles();
-
   const [state, setState] = useState([{}]);
 
 
@@ -42,46 +25,50 @@ export const ActividadesAcademicas = () => {
     }
 
     setState(auxiliarData);
-
   }
 
   useEffect(() => {
     getActividadesAcademicas();
   }, []);
 
+  const columnas =  [
+    {title: 'Nombre' , field: 'nombre'},
+    {title: 'Tipo' ,field: 'tipo'},
+    {title: 'Progreso (%)',field: 'progreso'},
+    {title: 'Fecha Creación',field: 'fecha'},
+    {title: 'Acciones',field: 'acciones' , sorting:false}
+  ];
 
-
-  const rows = state;
-
+  const data= state;
+  
   return (
-    <>
-      <Typography color="textPrimary" variant="h3">Profesionales</Typography>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell align="right">Tipo</TableCell>
-              <TableCell align="right">Progreso &nbsp; (%)</TableCell>
-              <TableCell align="right">Fecha de creación</TableCell>
-              <TableCell align="right">Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.nombre}>
-                <TableCell component="th" scope="row">
-                  {row.nombre}
-                </TableCell>
-                <TableCell align="right">{row.tipo}</TableCell>
-                <TableCell align="right">{row.progreso}</TableCell>
-                <TableCell align="right">{row.fecha}</TableCell>
-                <TableCell align="right">{row.acciones}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+
+  <div style={{ maxWidth: '100%' }}>
+        
+        <MaterialTable
+          columns={columnas}
+          data={data}
+          title="Academicas"
+          options={
+            {
+              paging:false,
+              search:true,
+              draggable: false
+            }         
+        }
+       
+        localization={
+          {
+            toolbar:{searchPlaceholder : 'Buscar actividad'},
+            body: {emptyDataSourceMessage: 'No hay actividades para mostrar'}
+          }
+        }
+
+
+        />
+
+      </div>
   )
 }
+
+
