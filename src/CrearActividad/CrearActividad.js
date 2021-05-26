@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import User from '../User';
 
 // Material UI
 import TextField from '@material-ui/core/TextField';
@@ -23,7 +24,6 @@ import './CrearActividad.css';
 import { BACKEND_URL } from '../Constants/constants.js';
 
 function CrearActividad() {
-
     const visibilityValues = ['pública', 'privada'];
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
 
@@ -88,6 +88,7 @@ function CrearActividad() {
 
         axios.get(`${BACKEND_URL}/interests`, {cancelToken: source.token})
             .then(({ data }) => { setInterestsAvailable(data) })
+        
         return () => source.cancel();
     }, []);
 
@@ -228,8 +229,14 @@ function CrearActividad() {
     // create activity
     const createActivity = (event) => {
         event.preventDefault();
+        // if user is not registered
+        if (sessionStorage.getItem('userId') == null) {
+            setOpen(true);
+            setSubmitStatus('error');
+            return false;
+        }
         const activity = {
-            codigoCreador: "000",
+            codigoCreador: sessionStorage.getItem('userId'),
             title,
             visibility,
             category,
