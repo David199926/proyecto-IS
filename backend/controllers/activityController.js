@@ -34,6 +34,7 @@ const getCategoriesAndTypes = (req, res) => {
  */
 const createActivity = async (req, res) => {
     const activity = {
+        "codigoCreador": req.body.codigoCreador,
         "título": req.body.title,
         "progreso": req.body.progress,
         "pública": req.body.visibility === "pública",

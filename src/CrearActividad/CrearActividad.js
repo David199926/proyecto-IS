@@ -138,7 +138,7 @@ function CrearActividad() {
                     interests.map((option, index) => (
                         <Chip
                             key={index}
-                            label={option}
+                            label={option.nombre}
                             className="interests-chips"
                             onDelete={handleDelete(option)}
                         />
@@ -197,12 +197,12 @@ function CrearActividad() {
     const pushInterest = (event, newValue) => {
         if (newValue == null) return null;
         setInterests([...interests, newValue]);
-        setInterestsAvailable(interestsAvailable.filter((value) => value !== newValue));
+        setInterestsAvailable(interestsAvailable.filter((value) => value.id !== newValue.id));
         setInputvalues([]);
     }
     // handle delete interest input
     const handleDelete = (chipToDelete) => () => {
-        setInterests((interests) => interests.filter((interest) => interest !== chipToDelete));
+        setInterests((interests) => interests.filter((interest) => interest.id !== chipToDelete.id));
         setInterestsAvailable([...interestsAvailable, chipToDelete]);
     };
     // handle close SnackBar
@@ -229,6 +229,7 @@ function CrearActividad() {
     const createActivity = (event) => {
         event.preventDefault();
         const activity = {
+            codigoCreador: "000",
             title,
             visibility,
             category,
@@ -237,7 +238,7 @@ function CrearActividad() {
             startPeriod,
             finishPeriod,
             description,
-            interests,
+            interests: interests.map((interest) => interest.id),
             activityData,
             interestsAvailable,
         }
@@ -365,9 +366,9 @@ function CrearActividad() {
                     {/* Input Temas de interés de la actividad */}
                     <Autocomplete
                         options={interestsAvailable}
+                        getOptionLabel={(interest) => interest.nombre}
                         value={inputValues}
                         onChange={pushInterest}
-                        getOptionLabel={(interest) => interest}
                         renderInput={(params) => <TextField {...params} label="Temas de interés" variant="outlined" fullWidth />}
                     />
                 </Grid>
