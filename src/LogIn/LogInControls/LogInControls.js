@@ -58,7 +58,7 @@ function LogInControls() {
                 let error = response.data.error;
                 if (error === null) {
                     // all is correctly
-                    window.location = '/crear';
+                    window.location = '/mis-actividades';
                     return true;
                 }
                 // unregistered user

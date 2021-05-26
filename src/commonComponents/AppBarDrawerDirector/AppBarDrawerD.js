@@ -119,7 +119,7 @@ export default function AppBarDrawer(props) {
             </ListItemIcon>
             <ListItemText primary={'Colaboraciones'} />
           </ListItem>
-          <ListItem button onClick={() => window.location = '/crear'}>
+          <ListItem button onClick={() => window.location = '/mis-actividades'}>
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>

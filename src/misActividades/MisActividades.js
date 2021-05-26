@@ -5,12 +5,11 @@ import { ActividadesProfesionales } from './ActividadesProfesionales'
 import { NuevaActividad } from './NuevaActividad'
 
 export const MisActividades = () => {
-    
-    
+
     return (
         <>
 
-        <Grid style={{'margin-top': '10px','margin-left': '120px'}}>
+        <Grid style={{'margin-top': '30px','margin-left': '320px'}}>
             <Grid item>
                 <Typography variant="h2">Mis Actividades</Typography>
             </Grid>

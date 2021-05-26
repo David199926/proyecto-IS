@@ -3,10 +3,11 @@ import CrearActividad from './CrearActividad/CrearActividad';
 import EditarActividad from './EditarActividad/EditarActividad';
 import ReportePersonalizado from './ReportePersonalizado/ReportePersonalizado';
 import Perfil from './Perfil/Perfil';
-import AppBarDrawer from './commonComponents/AppBarDrawer/AppBarDrawer';
 import AppBarDrawerDirector from './commonComponents/AppBarDrawerDirector/AppBarDrawerD';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { ActividadForanea } from './actividadForanea/ActividadForanea';
+import {MisActividades} from './misActividades/MisActividades';
+
 function App() {
   return (
 
@@ -48,7 +49,15 @@ function App() {
 
       <Router>
         <Route path="/foranea">
+        <AppBarDrawerDirector />
           <ActividadForanea />
+        </Route>
+      </Router>
+
+      <Router>
+        <Route path="/mis-actividades">
+        <AppBarDrawerDirector />
+          <MisActividades />
         </Route>
       </Router>
 

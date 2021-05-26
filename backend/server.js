@@ -1,10 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+
+
 // controllers
 const logInController = require('./controllers/logInController');
 const activityController = require('./controllers/activityController');
 const interestsController = require('./controllers/interestsController');
 const actividadForanea = require('./controllers/actividadForanea');
+const MyActivities = require('./routes/MyActivities.routes')
 
 require('dotenv').config();
 
@@ -25,6 +28,13 @@ app.get('/interests', interestsController.getInterests);
 app.get('/actividad-foranea' , actividadForanea.getActividad );
 //sube la actividad a la base de datos
 app.post('/new-activity', activityController.createActivity);
+
+
+
+/**
+ *
+ */
+app.use('/mis-actividades' , MyActivities);
 
 
 app.listen(port, () => {

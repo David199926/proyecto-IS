@@ -14,11 +14,7 @@ export const EditarActividad = (actividad) => {
         setState(actividad);
     },[actividad]);
     
-    const editar = () =>{
-        /*
-        * Logica para editar la actividad
-        */
-    }
+ 
 
-    return <Button onClick={editar} startIcon={<EditIcon/>}/>
+    return <Button href={'/editar'}  startIcon={<EditIcon/>}/>
 }

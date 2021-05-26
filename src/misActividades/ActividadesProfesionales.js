@@ -1,70 +1,73 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { Button, IconButton, Typography } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import React, { useState, useEffect } from 'react';
 import { EliminarActividad } from './EliminarActividad';
 import { EditarActividad } from './EditarActividad';
+import MaterialTable from 'material-table'
 
 export const ActividadesProfesionales = () => {
 
-    const useStyles = makeStyles({
-        table: {
-          minWidth: 650,
-        },
+  const [state, setState] = useState([{}]);
+
+
+  const getActividadesAcademicas = async () => {
+
+    const url = 'http://localhost:4000/mis-actividades/profesionales';
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const auxiliarData = [];
+
+    for (let i = 0; i < data.length; i++) {
+      auxiliarData.push({
+        nombre: data[i].data.nombre, tipo: data[i].data.tipo,
+        progreso: data[i].data.progreso, fecha: data[i].data.fecha,
+        acciones: <><EditarActividad /> <EliminarActividad idActividad={data[i].id}/> </>
       });
-      
-      function createData(nombre, tipo, progreso, fecha, acciones) {
-        return { nombre, tipo, progreso, fecha, acciones};
-      }
-      
-      const rows = [
-        createData('Actividad 1', 'Tipo 1', 10, '24/04/2021'),
-        createData('Actividad 2', 'Tipo 2', 20, '24/04/2021'),
-        createData('Actividad 3', 'Tipo 3', 30, '24/04/2021'),
-     
-      ];
 
-      
+    }
 
-      const classes = useStyles();
+    setState(auxiliarData);
+  }
 
-    return (
-        <>
-       <Typography color="textPrimary" variant="h3">Profesionales</Typography>
-        <TableContainer component={Paper}>
-        <Table className={classes.table} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell align="right">Tipo</TableCell>
-              <TableCell align="right">Progreso &nbsp; (%)</TableCell>
-              <TableCell align="right">Fecha de creación</TableCell>
-              <TableCell align="right">Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.nombre}>
-                <TableCell component="th" scope="row">
-                  {row.nombre}
-                </TableCell>
-                <TableCell align="right">{row.tipo}</TableCell>
-                <TableCell align="right">{row.progreso}</TableCell>
-                <TableCell align="right">{row.fecha}</TableCell>
-                <TableCell align="right"><><EditarActividad/><EliminarActividad/></></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-       </>
-    )
+  useEffect(() => {
+    getActividadesAcademicas();
+  }, []);
+
+  const columnas =  [
+    {title: 'Nombre' , field: 'nombre'},
+    {title: 'Tipo' ,field: 'tipo'},
+    {title: 'Progreso (%)',field: 'progreso'},
+    {title: 'Fecha Creación',field: 'fecha'},
+    {title: 'Acciones',field: 'acciones' , sorting:false}
+  ];
+
+  const data= state;
+  
+  return (
+
+  <div style={{ maxWidth: '100%' }}>
+        
+        <MaterialTable
+          columns={columnas}
+          data={data}
+          title="Profesionales"
+          options={
+            {
+              paging:false,
+              search:true,
+              draggable: false
+            }         
+        }
+       
+        localization={
+          {
+            toolbar:{searchPlaceholder : 'Buscar actividad'},
+            body: {emptyDataSourceMessage: 'No hay actividades para mostrar'}
+          }
+        }
+
+        />
+
+      </div>
+  )
+
 }

@@ -30,7 +30,7 @@ export const ActividadForanea = () => {
     return (
 
 
-        <Grid container className="componente" >
+        <Grid container style={{'margin-top': '30px','margin-left': '420px' ,}} className="componente" >
 
             <Grid container spacing={4}>
 
