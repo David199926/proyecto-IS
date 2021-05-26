@@ -5,7 +5,7 @@ const getAllInterests = async () => {
     const results = [];
     const snapshot = await db.collection('intereses').get();
     snapshot.forEach((doc) => {
-        results.push(doc.data().nombre);
+        results.push({ ...doc.data(), id: doc.id });
     })
     return results;
 }
