@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import logo from '../../Resources/Images/logo.png';
 import './LogInControls.css';
+import User from '../../User';
 
 // material ui
 import TextField from '@material-ui/core/TextField';
@@ -55,7 +56,7 @@ function LogInControls() {
             password,
         })
             .then(response => {
-                let error = response.data.error;
+                const {error, user} = response.data;
                 if (error === null) {
                     // all is correctly
                     window.location = '/mis-actividades';
