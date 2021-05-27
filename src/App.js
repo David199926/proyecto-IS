@@ -1,59 +1,84 @@
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// my components
+import AppBarDrawerDirector from './commonComponents/AppBarDrawerDirector/AppBarDrawerD';
+import { ActividadForanea } from './ActividadForanea/ActividadForanea';
+import { MisActividades } from './misActividades/MisActividades';
 import LogIn from './LogIn/LogIn';
 import CrearActividad from './CrearActividad/CrearActividad';
 import EditarActividad from './EditarActividad/EditarActividad';
 import ReportePersonalizado from './ReportePersonalizado/ReportePersonalizado';
 import Perfil from './Perfil/Perfil';
-import AppBarDrawerDirector from './commonComponents/AppBarDrawerDirector/AppBarDrawerD';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { ActividadForanea } from './ActividadForanea/ActividadForanea';
-import { MisActividades } from './misActividades/MisActividades';
+//my routing
+import { AuthRoute } from './commonComponents/AuthRoute/AuthRoute';
 
 function App() {
-  return (
+    return (
+        <Router>
+            <Switch>
+                {/* log in */}
+                <Route path="/" exact component={LogIn} />
+        
+                {/* mostrar mis actividades */}
+                <AuthRoute path="/mis-actividades" component={(props) => {
+                    return (
+                        <div>
+                            <AppBarDrawerDirector {...props}/>
+                            <MisActividades {...props}/>
+                        </div>
+                    )
+                }} />
 
-    <Router>
-      <Switch>
-        {/* log in */}
-        <Route path="/" exact>
-          <LogIn />
-        </Route>
-        {/* crear actividad */}
-        <Route path="/crear">
-          <AppBarDrawerDirector>
-            <CrearActividad />
-          </AppBarDrawerDirector>
-        </Route>
-        {/* editar actividad */}
-        <Route path="/editar">
-          <AppBarDrawerDirector />
-          <EditarActividad />
-        </Route>
-        {/* reporte personalizado */}
-        <Route path="/personalizado">
-          <AppBarDrawerDirector />
-          <ReportePersonalizado />
-        </Route>
-        {/* info del perfil de usuario*/}
-        <Route path="/perfil">
-          <AppBarDrawerDirector />
-          <Perfil />
-        </Route>
-        {/* actividad de tercero */}
-        <Route path="/foranea">
-          <AppBarDrawerDirector />
-          <ActividadForanea />
-        </Route>
-        {/* mostrar mis actividades */}
-        <Route path="/mis-actividades">
-          <AppBarDrawerDirector />
-          <MisActividades />
-        </Route>
-        {/* 404 */}
-        <Route path="*" component={() => "404 NOT FOUND"}/>
-      </Switch>
-    </Router>
+                {/* crear actividad */}
+                <AuthRoute path="/crear" component={(props) => {
+                    return (
+                        <AppBarDrawerDirector {...props}>
+                            <CrearActividad />
+                        </AppBarDrawerDirector>
+                    )
+                }
+                } />
 
-  );
+                {/* editar actividad */}
+                <AuthRoute path="/editar" component={(props) => {
+                    return (
+                        <AppBarDrawerDirector {...props}>
+                            <EditarActividad />
+                        </AppBarDrawerDirector>
+                    )
+                }} />
+
+                {/* reporte personalizado */}
+                <AuthRoute path="/personalizado" component={(props) => {
+                    return (
+                        <AppBarDrawerDirector {...props}>
+                            <ReportePersonalizado />
+                        </AppBarDrawerDirector>
+                    )
+                }} />
+
+                {/* info del perfil de usuario*/}
+                <AuthRoute path="/perfil" component={(props) => {
+                    return (
+                        <AppBarDrawerDirector {...props}>
+                            <Perfil />
+                        </AppBarDrawerDirector>
+                    )
+                }} />
+
+                {/* actividad de tercero */}
+                <AuthRoute path="/foranea" component={(props) => {
+                    return (
+                        <AppBarDrawerDirector {...props}>
+                            <ActividadForanea />
+                        </AppBarDrawerDirector>
+                    )
+                }} />
+
+                {/* 404 */}
+                <Route path="*" component={() => "404 NOT FOUND"} />
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;

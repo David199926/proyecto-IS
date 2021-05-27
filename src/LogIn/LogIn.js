@@ -12,8 +12,7 @@ function LogInImage() {
     )
 }
 
-export default function LogIn() {
-    
+export default function LogIn(props) {
     return (
         <div className="login-page">
             <Grid container spacing={0}>
@@ -25,7 +24,7 @@ export default function LogIn() {
                 </Hidden>
                 {/* login controls */}
                 <Grid item xs={12} md={6}>
-                    <LogInControls/>
+                    <LogInControls {...props}/>
                 </Grid>
             </Grid>
         </div>

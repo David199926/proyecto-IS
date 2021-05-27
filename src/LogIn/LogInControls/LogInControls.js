@@ -15,12 +15,13 @@ import axios from 'axios';
 // my components
 import PasswordInput from './PasswordInput/Password';
 
-// constants
+// constants and utils
 import { BACKEND_URL } from '../../Constants/constants.js';
+import auth from '../../auth';
 const EMPTY_MESSAGE = "Este campo es obligatorio";
 
-function LogInControls() {
-
+function LogInControls(props) {
+    
     // state
     const [rememberMe, setRememberMe] = useState(false);
     const [username, setUsername] = useState("");
@@ -58,9 +59,11 @@ function LogInControls() {
                 const {error, user} = response.data;
                 if (error === null) {
                     // all is correctly
-                    sessionStorage.setItem('userId', user.id);
-                    window.location = '/mis-actividades';
-                    return true;
+                    auth.login(() => {
+                        sessionStorage.setItem('userId', user.id);
+                        props.history.push('/mis-actividades');
+                        return true;
+                    });
                 }
                 // unregistered user
                 if (error === 0) {

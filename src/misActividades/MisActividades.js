@@ -3,10 +3,11 @@ import { Typography, Grid } from '@material-ui/core'
 import { ActividadesAcademicas } from './ActividadesAcademicas'
 import { ActividadesProfesionales } from './ActividadesProfesionales'
 import { NuevaActividad } from './NuevaActividad'
+import {withRouter} from 'react-router-dom'
 
-export const MisActividades = () => {
+export const MisActividades = (props) => {
 
-    console.log('ID',sessionStorage.getItem('userId'));
+    //console.log('ID',sessionStorage.getItem('userId'));
     
     return (
         <div>
@@ -24,7 +25,7 @@ export const MisActividades = () => {
                     </Grid>
 
                     <Grid item>
-                        <NuevaActividad />
+                        <NuevaActividad history={props.history} />
                     </Grid>
 
                 </Grid>
