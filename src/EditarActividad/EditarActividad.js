@@ -59,6 +59,7 @@ function EditarActividad() {
 
     // component effects
 
+    
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
     useEffect(() => {
         const source = axios.CancelToken.source();
@@ -91,10 +92,32 @@ function EditarActividad() {
         const source = axios.CancelToken.source();
 
         axios.get(`${BACKEND_URL}/interests`, {cancelToken: source.token})
-            .then(({ data }) => { setInterestsAvailable(data) })
+        .then(({ data }) => {
+            let interests = data;
+            //setInterestsAvailable(data);
+            // get activity data
+            axios.post(`${BACKEND_URL}/activity/${id}`, {cancelToken: source.token})
+            .then(({ data }) => {
+                setTitle(data["título"]);
+                setVisibility(data["pública"] ? visibilityValues[0] : visibilityValues[1]);
+                setCategory(data["categoría"]);
+                setActivityType(data["tipo"]);
+                setProgress(data["progreso"]);
+                setStartPeriod(data["periodo de inicio"]);
+                setFinishPeriod(data["periodo de finalización"])
+                setDescription(data["descripción"]);
+                let interestCodes = data["temas relacionados"];
+                let relatedTopics = interests.filter((interest) => interestCodes.includes(interest.id));
+                let availableTopics = interests.filter((interest) => !interestCodes.includes(interest.id));
+                setInterests(relatedTopics);
+                setInterestsAvailable(availableTopics);
+                setActivityData(data["datos tipo"])
+            }) 
+        })
         
         return () => source.cancel();
     }, []);
+    
 
     // behaviors
 
@@ -265,7 +288,7 @@ function EditarActividad() {
 
     return (
         <form className="main-container-crear" onSubmit={createActivity}>
-            <h1>Crear actividad</h1>
+            <h1>Editar actividad</h1>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={8}>
                     {/* titulo de la actividad */}
