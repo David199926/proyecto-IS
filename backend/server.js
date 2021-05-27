@@ -39,7 +39,6 @@ app.post('/new-activity', activityController.createActivity);
 app.use('/mis-actividades' , MyActivities);
 app.use('/foranea', ForeignActivity);
 app.use('/edit', EditActivity);
-app.use('/notifications' , Notifications);
 app.use('/activities/public' , ListOfForeignActivities);
 
 
