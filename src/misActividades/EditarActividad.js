@@ -1,20 +1,19 @@
 import React , {useState , useEffect} from 'react'
 import { Button  } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit';
+import { Link } from 'react-router-dom';
 
-export const EditarActividad = (actividad) => {
+export const EditarActividad = (props) => {
 
     const [state,setState] = useState({});
 
     useEffect(()=>{
-        setState(actividad);
+        setState(props);
     },[]);
 
     useEffect(()=>{
-        setState(actividad);
-    },[actividad]);
+        setState(props);
+    },[props]);
     
- 
-
-    return <Button href={'/editar'}  startIcon={<EditIcon/>}/>
+    return <Link to={`/editar/${props.idActividad}`}><Button startIcon={<EditIcon/>}/></Link>
 }
