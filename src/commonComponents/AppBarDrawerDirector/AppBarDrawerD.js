@@ -27,9 +27,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import perfil from '../../Resources/Images/profile.png';
 import './AppBarDrawerD.css';
 
-// auth
-import auth from '../../auth';
-
 // const values
 const drawerWidth = 290;
 // styles
@@ -104,26 +101,13 @@ export default function AppBarDrawer(props) {
     setAnchorEl(null);
   };
 
-  // logout function
-  const logOut = () => {
-    auth.logout(() => {
-      props.history.push('/');
-    })
-    handleClose();
-  }
-
-  // go to profile page
-  const toProfile = () => {
-    props.history.push('/perfil');
-  }
-
   // Drawer
   const drawer = (
     <div>
       <Toolbar />
       <div className={classes.drawerContainer}>
         <List>
-          <ListItem button onClick={() => props.history.push('/personalizado')}>
+          <ListItem button onClick={() => window.location = '/reporte'}>
             <ListItemIcon>
               <AssessmentIcon />
             </ListItemIcon>
@@ -135,7 +119,7 @@ export default function AppBarDrawer(props) {
             </ListItemIcon>
             <ListItemText primary={'Colaboraciones'} />
           </ListItem>
-          <ListItem button onClick={() => props.history.push('/mis-actividades')}>
+          <ListItem button onClick={() => window.location = '/mis-actividades'}>
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
@@ -198,11 +182,11 @@ export default function AppBarDrawer(props) {
             }}
             open={open}
             onClose={handleClose} >
-            <MenuItem onClick={toProfile}>
-              <span className={classes.Link}>Ver perfil</span>
+            <MenuItem onClick={handleClose}>
+              <a href="/perfil" className={classes.Link}>Ver perfil</a>
             </MenuItem>
-            <MenuItem onClick={logOut}>
-              <span className={classes.Link} >Cerrar sesión</span>
+            <MenuItem onClick={handleClose}>
+              <a href="/" className={classes.Link} >Cerrar sesión</a>
             </MenuItem>
           </Menu>
         </div>
