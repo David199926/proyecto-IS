@@ -7,7 +7,10 @@ const logInController = require('./controllers/logInController');
 const activityController = require('./controllers/activityController');
 const interestsController = require('./controllers/interestsController');
 const actividadForanea = require('./controllers/actividadForanea');
-const MyActivities = require('./routes/MyActivities.routes')
+
+//routers
+const MyActivities = require('./routes/MyActivities.routes');
+const ForeignActivity = require('./routes/ForeignActivity.routes');
 
 require('dotenv').config();
 
@@ -32,9 +35,10 @@ app.post('/new-activity', activityController.createActivity);
 
 
 /**
- *
+ * Routers
  */
 app.use('/mis-actividades' , MyActivities);
+app.use('/foranea', ForeignActivity);
 
 
 app.listen(port, () => {
