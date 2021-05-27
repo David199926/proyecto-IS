@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../../Resources/Images/logo.png';
 import './LogInControls.css';
-import User from '../../User';
 
 // material ui
 import TextField from '@material-ui/core/TextField';

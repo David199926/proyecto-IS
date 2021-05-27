@@ -3,13 +3,10 @@ import { Typography, Grid } from '@material-ui/core'
 import { ActividadesAcademicas } from './ActividadesAcademicas'
 import { ActividadesProfesionales } from './ActividadesProfesionales'
 import { NuevaActividad } from './NuevaActividad'
-import User from '../User';
 
 export const MisActividades = () => {
-    console.log(User.getUserData())
     return (
-        <>
-
+        <div>
             <Grid style={{ 'margin-top': '30px', 'margin-left': '320px' }}>
                 <Grid item>
                     <Typography variant="h2">Mis Actividades</Typography>
@@ -30,6 +27,6 @@ export const MisActividades = () => {
                 </Grid>
 
             </Grid>
-        </>
+        </div>
     )
 }

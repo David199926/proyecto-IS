@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "crypto": "^1.0.1",
     "material-table": "^1.69.3",
     "react": "16.14.0",
     "react-dom": "16.14.0",

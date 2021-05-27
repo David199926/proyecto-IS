@@ -5,7 +5,7 @@ import ReportePersonalizado from './ReportePersonalizado/ReportePersonalizado';
 import Perfil from './Perfil/Perfil';
 import AppBarDrawerDirector from './commonComponents/AppBarDrawerDirector/AppBarDrawerD';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { ActividadForanea } from './ActividadForanea/ActividadForanea';
+import { ActividadForanea } from './actividadForanea/ActividadForanea';
 import {MisActividades} from './misActividades/MisActividades';
 
 function App() {
