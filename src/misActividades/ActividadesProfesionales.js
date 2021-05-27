@@ -11,7 +11,12 @@ export const ActividadesProfesionales = () => {
   const getActividadesAcademicas = async () => {
 
     const url = 'http://localhost:4000/mis-actividades/profesionales';
-    const response = await fetch(url);
+    const options = {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({codigoCreador : sessionStorage.getItem('userId')})
+  }
+    const response = await fetch(url,options);
     const data = await response.json();
 
     const auxiliarData = [];

@@ -4,7 +4,10 @@ const getAcademicas = async (req, res) =>{
     
     let myActivities = [];
 
-     await db.collection("actividades").where('categoría' , '==' , 'Académica').get().then((querySnapshot) => {
+     await db.collection("actividades")
+     .where('categoría' , '==' , 'Académica')
+     .where('codigoCreador' , '==' , req.body.codigoCreador)
+     .get().then((querySnapshot) => {
         
         querySnapshot.forEach(async (doc) => {
             let response = await {data: doc.data() , id: doc.id};
@@ -23,7 +26,10 @@ const getProfesionales = async (req , res) => {
     
     let myActivities = [];
 
-    await db.collection("actividades").where('categoría' , '==' , 'Profesional').get().then((querySnapshot) => {
+    await db.collection("actividades")
+    .where('categoría' , '==' , 'Profesional')
+    .where('codigoCreador' , '==' , req.body.codigoCreador)
+    .get().then((querySnapshot) => {
        
        querySnapshot.forEach(async (doc) => {
            let response = await {data: doc.data() , id: doc.id};
