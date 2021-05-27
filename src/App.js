@@ -4,63 +4,53 @@ import EditarActividad from './EditarActividad/EditarActividad';
 import ReportePersonalizado from './ReportePersonalizado/ReportePersonalizado';
 import Perfil from './Perfil/Perfil';
 import AppBarDrawerDirector from './commonComponents/AppBarDrawerDirector/AppBarDrawerD';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ActividadForanea } from './ActividadForanea/ActividadForanea';
-import {MisActividades} from './misActividades/MisActividades';
+import { MisActividades } from './misActividades/MisActividades';
 
 function App() {
   return (
 
     <Router>
-      <Router>
+      <Switch>
+        {/* log in */}
         <Route path="/" exact>
           <LogIn />
         </Route>
-      </Router>
-
-      <Router>
+        {/* crear actividad */}
         <Route path="/crear">
-        <AppBarDrawerDirector>
-          <CrearActividad/>
-        </AppBarDrawerDirector>
+          <AppBarDrawerDirector>
+            <CrearActividad />
+          </AppBarDrawerDirector>
         </Route>
-      </Router>
-
-      <Router>
+        {/* editar actividad */}
         <Route path="/editar">
-        <AppBarDrawerDirector />
+          <AppBarDrawerDirector />
           <EditarActividad />
         </Route>
-      </Router>
-
-      <Router>
+        {/* reporte personalizado */}
         <Route path="/personalizado">
           <AppBarDrawerDirector />
           <ReportePersonalizado />
         </Route>
-      </Router>
-
-      <Router>
+        {/* info del perfil de usuario*/}
         <Route path="/perfil">
-        <AppBarDrawerDirector />
+          <AppBarDrawerDirector />
           <Perfil />
         </Route>
-      </Router>
-
-      <Router>
+        {/* actividad de tercero */}
         <Route path="/foranea">
-        <AppBarDrawerDirector />
+          <AppBarDrawerDirector />
           <ActividadForanea />
         </Route>
-      </Router>
-
-      <Router>
+        {/* mostrar mis actividades */}
         <Route path="/mis-actividades">
-        <AppBarDrawerDirector />
+          <AppBarDrawerDirector />
           <MisActividades />
         </Route>
-      </Router>
-
+        {/* 404 */}
+        <Route path="*" component={() => "404 NOT FOUND"}/>
+      </Switch>
     </Router>
 
   );
