@@ -4,7 +4,7 @@ const getAcademicas = async (req, res) =>{
     
     let myActivities = [];
 
-     await db.collection("misActividades").where('categoria' , '==' , 'academica').get().then((querySnapshot) => {
+     await db.collection("actividades").where('categoría' , '==' , 'Académica').get().then((querySnapshot) => {
         
         querySnapshot.forEach(async (doc) => {
             let response = await {data: doc.data() , id: doc.id};
@@ -23,7 +23,7 @@ const getProfesionales = async (req , res) => {
     
     let myActivities = [];
 
-    await db.collection("misActividades").where('categoria' , '==' , 'profesional').get().then((querySnapshot) => {
+    await db.collection("actividades").where('categoría' , '==' , 'Profesional').get().then((querySnapshot) => {
        
        querySnapshot.forEach(async (doc) => {
            let response = await {data: doc.data() , id: doc.id};
@@ -38,7 +38,7 @@ const getProfesionales = async (req , res) => {
 }
 
 const deleteActivity = async (req, res) => {
-    await db.collection('misActividades').doc(req.body.id).delete();
+    await db.collection('actividades').doc(req.body.id).delete();
 }
 
 module.exports ={
