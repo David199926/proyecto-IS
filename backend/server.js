@@ -11,6 +11,8 @@ const interestsController = require('./controllers/interestsController');
 const MyActivities = require('./routes/MyActivities.routes');
 const ForeignActivity = require('./routes/ForeignActivity.routes');
 const EditActivity = require('./routes/EditActivity.routes');
+const Notifications = require('./routes/Notifications.routes');
+const ListOfForeignActivities = require('./routes/ListOfForeignActivities.routes');
 
 require('dotenv').config();
 
@@ -38,6 +40,8 @@ app.post('/new-activity', activityController.createActivity);
 app.use('/mis-actividades' , MyActivities);
 app.use('/foranea', ForeignActivity);
 app.use('/edit', EditActivity);
+app.use('/notifications' , Notifications);
+app.use('/activities/public' , ListOfForeignActivities);
 
 
 app.listen(port, () => {
