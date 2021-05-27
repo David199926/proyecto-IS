@@ -11,7 +11,6 @@ const interestsController = require('./controllers/interestsController');
 const MyActivities = require('./routes/MyActivities.routes');
 const ForeignActivity = require('./routes/ForeignActivity.routes');
 const EditActivity = require('./routes/EditActivity.routes');
-const Notifications = require('./routes/Notifications.routes');
 const ListOfForeignActivities = require('./routes/ListOfForeignActivities.routes');
 
 require('dotenv').config();
