@@ -8,6 +8,14 @@ const uploadActivity = async (activity) => {
     })
 }
 
+const getActivity = async (activityId) => {
+    let result = null;
+    const snapshot = await db.collection('actividades').where('__name__', '==' ,activityId).get();
+    snapshot.forEach((doc) => { result = {...doc.data(), id: doc.id} })
+    return result
+}
+
 module.exports = {
     uploadActivity,
+    getActivity
 }

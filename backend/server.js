@@ -30,6 +30,8 @@ app.get('/categories-types', activityController.getCategoriesAndTypes);
 app.get('/interests', interestsController.getInterests);
 //sube la actividad a la base de datos
 app.post('/new-activity', activityController.createActivity);
+// consulta una actividad de la base de datos
+app.post('/activity/:id', activityController.getActivity);
 
 
 

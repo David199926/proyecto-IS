@@ -58,8 +58,21 @@ const createActivity = async (req, res) => {
         })
 }
 
+const getActivity = async (req, res) => {
+    const {id} = req.params;
+    activityModel.getActivity(id)
+    .then((activity) => {
+        res.json(activity);
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ 'status': 'failed' });
+    })
+}
+
 
 module.exports = {
     getCategoriesAndTypes,
-    createActivity
+    createActivity,
+    getActivity,
 }
