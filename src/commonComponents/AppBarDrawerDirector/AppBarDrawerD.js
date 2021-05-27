@@ -112,6 +112,11 @@ export default function AppBarDrawer(props) {
     handleClose();
   }
 
+  // go to profile page
+  const toProfile = () => {
+    props.history.push('/perfil');
+  }
+
   // Drawer
   const drawer = (
     <div>
@@ -193,8 +198,8 @@ export default function AppBarDrawer(props) {
             }}
             open={open}
             onClose={handleClose} >
-            <MenuItem onClick={handleClose}>
-              <a href="/perfil" className={classes.Link}>Ver perfil</a>
+            <MenuItem onClick={toProfile}>
+              <span className={classes.Link}>Ver perfil</span>
             </MenuItem>
             <MenuItem onClick={logOut}>
               <span className={classes.Link} >Cerrar sesión</span>
