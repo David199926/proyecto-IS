@@ -6,7 +6,7 @@ import { MisActividades } from './misActividades/MisActividades';
 import LogIn from './LogIn/LogIn';
 import CrearActividad from './CrearActividad/CrearActividad';
 import EditarActividad from './EditarActividad/EditarActividad';
-import ReportePersonalizado from './ReportePersonalizado/ReportePersonalizado';
+import Reporte from './Reporte/Forms1/Reportes';
 import Perfil from './Perfil/Perfil';
 //my routing
 import { AuthRoute } from './commonComponents/AuthRoute/AuthRoute';
@@ -48,11 +48,12 @@ function App() {
                 }} />
 
                 {/* reporte personalizado */}
-                <AuthRoute path="/personalizado" component={(props) => {
+                <AuthRoute path="/reporte" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props}>
-                            <ReportePersonalizado />
-                        </AppBarDrawerDirector>
+                        <div>
+                            <AppBarDrawerDirector {...props} />
+                            <Reporte />
+                        </div>
                     )
                 }} />
 

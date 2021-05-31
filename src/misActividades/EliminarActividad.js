@@ -8,7 +8,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 
 
-export const EliminarActividad = ({ idActividad }) => {
+export const EliminarActividad = ({ idActividad, history }) => {
 
     const [open, setOpen] = useState(false);
 

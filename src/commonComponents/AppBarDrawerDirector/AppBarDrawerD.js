@@ -27,9 +27,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import perfil from '../../Resources/Images/profile.png';
 import './AppBarDrawerD.css';
 
-// auth
-import auth from '../../auth';
-
 // const values
 const drawerWidth = 290;
 // styles
@@ -106,15 +103,11 @@ export default function AppBarDrawer(props) {
 
   // logout function
   const logOut = () => {
-    auth.logout(() => {
-      props.history.push('/');
-    })
-    handleClose();
+    props.history.push('/');
   }
-
-  // go to profile page
+  // to profile function
   const toProfile = () => {
-    props.history.push('/perfil');
+    props.history.push('/perfil')
   }
 
   // Drawer
@@ -123,7 +116,7 @@ export default function AppBarDrawer(props) {
       <Toolbar />
       <div className={classes.drawerContainer}>
         <List>
-          <ListItem button onClick={() => props.history.push('/personalizado')}>
+          <ListItem button onClick={() =>props.history.push('/reporte')}>
             <ListItemIcon>
               <AssessmentIcon />
             </ListItemIcon>

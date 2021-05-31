@@ -3,7 +3,7 @@ import { EliminarActividad } from './EliminarActividad';
 import { EditarActividad } from './EditarActividad';
 import MaterialTable from 'material-table'
 
-export const ActividadesProfesionales = () => {
+export const ActividadesProfesionales = ({history}) => {
 
   const [state, setState] = useState([{}]);
 
@@ -25,7 +25,7 @@ export const ActividadesProfesionales = () => {
       auxiliarData.push({
         nombre: data[i].data['título'], tipo: data[i].data.tipo,
         progreso: data[i].data.progreso, fecha: data[i].data['periodo de inicio'],
-        acciones: <><EditarActividad idActividad={data[i].id}/> <EliminarActividad idActividad={data[i].id}/> </>
+        acciones: <><EditarActividad idActividad={data[i].id}/> <EliminarActividad history={history} idActividad={data[i].id}/> </>
       });
 
     }

@@ -3,7 +3,6 @@ import { Typography, Grid } from '@material-ui/core'
 import { ActividadesAcademicas } from './ActividadesAcademicas'
 import { ActividadesProfesionales } from './ActividadesProfesionales'
 import { NuevaActividad } from './NuevaActividad'
-import {withRouter} from 'react-router-dom'
 
 export const MisActividades = (props) => {
 
@@ -17,11 +16,11 @@ export const MisActividades = (props) => {
                 </Grid>
                 <Grid container spacing={5}>
                     <Grid item xs={11}>
-                        < ActividadesAcademicas />
+                        < ActividadesAcademicas history={props.history}/>
                     </Grid>
 
                     <Grid item xs={11}>
-                        < ActividadesProfesionales />
+                        < ActividadesProfesionales history={props.history} />
                     </Grid>
 
                     <Grid item>
