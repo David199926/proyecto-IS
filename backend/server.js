@@ -6,6 +6,7 @@ const cors = require('cors');
 const logInController = require('./controllers/logInController');
 const activityController = require('./controllers/activityController');
 const interestsController = require('./controllers/interestsController');
+const docenteController = require('./controllers/docenteController');
 
 //routers
 const MyActivities = require('./routes/MyActivities.routes');
@@ -30,8 +31,10 @@ app.get('/categories-types', activityController.getCategoriesAndTypes);
 app.get('/interests', interestsController.getInterests);
 //sube la actividad a la base de datos
 app.post('/new-activity', activityController.createActivity);
-// consulta una actividad de la base de datos
+// search for an activity in db
 app.post('/activity/:id', activityController.getActivity);
+// gets user info
+app.get('/user', docenteController.getUserInfo);
 
 
 
