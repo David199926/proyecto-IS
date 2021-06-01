@@ -3,16 +3,15 @@ import React, { useState, useEffect } from 'react';
 // Material UI
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 // alert message
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
 import Progress from './Progress/Progress';
 import UploadFile from './UploadFile/UploadFile';
+import {InterestsSelector} from '../commonComponents/InterestsSelector/InterestsSelector';
 
 import axios from 'axios';
 
@@ -45,7 +44,7 @@ function CrearActividad() {
     // activitys interests
     const [interests, setInterests] = useState([]);
     const [interestsAvailable, setInterestsAvailable] = useState([])
-    const [inputValues, setInputvalues] = useState([]);
+    
 
     // activity data
     const [activityData, setActivityData] = useState({});
@@ -130,24 +129,6 @@ function CrearActividad() {
         )
     }
 
-    // get insterest chips
-    const getInterestChips = () => {
-        return (
-            <Grid item xs={12}>
-                {
-                    interests.map((option, index) => (
-                        <Chip
-                            key={index}
-                            label={option.nombre}
-                            className="interests-chips"
-                            onDelete={handleDelete(option)}
-                        />
-                    ))
-                }
-            </Grid>
-        )
-    }
-
     // draws file input component if needed
     const checkIfNeedsFile = () => {
         if (activityType === '') return null;
@@ -193,18 +174,7 @@ function CrearActividad() {
         setActivityType(value);
         setActivityData(typeData[value].campos || {});
     }
-    // handle interest input
-    const pushInterest = (event, newValue) => {
-        if (newValue == null) return null;
-        setInterests([...interests, newValue]);
-        setInterestsAvailable(interestsAvailable.filter((value) => value.id !== newValue.id));
-        setInputvalues([]);
-    }
-    // handle delete interest input
-    const handleDelete = (chipToDelete) => () => {
-        setInterests((interests) => interests.filter((interest) => interest.id !== chipToDelete.id));
-        setInterestsAvailable([...interestsAvailable, chipToDelete]);
-    };
+    
     // handle close SnackBar
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
@@ -369,17 +339,14 @@ function CrearActividad() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* Input Temas de interés de la actividad */}
-                    <Autocomplete
-                        options={interestsAvailable}
-                        getOptionLabel={(interest) => interest.nombre}
-                        value={inputValues}
-                        onChange={pushInterest}
-                        renderInput={(params) => <TextField {...params} label="Temas de interés" variant="outlined" fullWidth />}
+                    <InterestsSelector
+                        interests={interests}
+                        setInterests={setInterests}
+                        interestsAvailable={interestsAvailable}
+                        setInterestsAvailable={setInterestsAvailable}
                     />
                 </Grid>
-                {/* Chips Temas de interés de la actividad */}
-                {getInterestChips()}
+                
             </Grid>
 
             {/* datos de actividad */}
