@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
+// Material UI
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+// alert message
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
+// My components
 import { InterestsSelector } from '../commonComponents/InterestsSelector/InterestsSelector';
 
 // styles
@@ -34,13 +39,11 @@ const theme = createMuiTheme({
 
 
 export default function Perfil() {
+
     const classes = useStyles();
 
     // component state
     const [profileImg, setImg] = useState(perfil);
-    const [legend, setLegend] = React.useState('');
-    const [errorTopic, seterrorTopic] = React.useState(false);
-
 
     //handle image reader
     const imageHandler = (e) => {
@@ -52,21 +55,24 @@ export default function Perfil() {
         }
         reader.readAsDataURL(e.target.files[0])
     }
-
-    const interestValues = [
-        { id: "123", nombre: "interes1" },
-        { id: "456", nombre: "interes2" },
-    ];
+    // handle close SnackBar
+    const handleClose = ({reason}) => {
+        if (reason === 'clickaway') return;
+        setOpen(false);
+    }
 
     // component state
-    const [name, setName] = useState('Julian Benavides');
+    const [open, setOpen] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState("success");
+    // suer info
+    const [name, setName] = useState('Usuario');
     const [totalActivities, setTotalActivities] = useState(0);
     const [collabs, setCollabs] = useState(0);
     const [unfinished, setUnfinished] = useState(0);
     const [finished, setFinished] = useState(0);
     // interests
     const [interests, setInterests] = useState([]);
-    const [interestsAvailable, setInterestsAvailable] = useState(interestValues)
+    const [interestsAvailable, setInterestsAvailable] = useState([])
 
     // effects
 
@@ -87,7 +93,53 @@ export default function Perfil() {
             })
 
         return () => source.cancel();
-    }, [])
+    }, []);
+    // intereses
+    useEffect(() => {
+        const source = axios.CancelToken.source();
+
+        axios.get(`${BACKEND_URL}/interests`, { cancelToken: source.token })
+            .then(({ data }) => {
+                let interests = data;
+                const id = sessionStorage.getItem('userId');
+                if (id === undefined) throw new Error;
+
+                axios.get(`${BACKEND_URL}/user-interests?id=${id}`, { cancelToken: source.token })
+                    .then(({ data }) => {
+                        let userInterests = data;
+                        if (userInterests.length === 0) {
+                            setInterests([]);
+                            setInterestsAvailable(interests);
+                            return source.cancel;
+                        }
+
+                        let available = interests.filter(interest => !userInterests.includes(interest.id))
+                        let current = interests.filter(interest => userInterests.includes(interest.id))
+
+                        setInterestsAvailable(available);
+                        setInterests(current);
+                    })
+            })
+
+        return source.cancel;
+    }, []);
+
+    const updateInterests = () => {
+        if (sessionStorage.getItem('userId') == null) {
+            setOpen(true);
+            setSubmitStatus('error');
+            return false;
+        }
+        axios.post(`${BACKEND_URL}/user-interests`, {
+            interests: interests.map(interest => interest.id),
+            id: sessionStorage.getItem('userId'),
+        })
+            .then(({ data }) => {
+                const { status } = data;
+                setOpen(true);
+                setSubmitStatus(status === 'ok' ? 'success' : 'error');
+            })
+    }
 
     return (
         <div className={classes.root}>
@@ -143,12 +195,12 @@ export default function Perfil() {
                         <div>
                             <Typography variant="h6" gutterBottom className="textt" >
                                 Intereses
-              </Typography>
+                            </Typography>
 
                             <Typography variant="body2" gutterBottom className="txt" Style={"font-size: 0.805rem"} >
                                 Define tus áreas de interés para que podamos recomendarte
                                 actividades de otros docentes.
-              </Typography>
+                            </Typography>
                             <Grid item xs={12}>
                                 {/* Input Temas de interés de la actividad */}
                                 <InterestsSelector
@@ -162,11 +214,21 @@ export default function Perfil() {
 
                         <Grid item xs={8} Style={" padding-top: 40px"}>
                             <ThemeProvider theme={theme}>
-                                <Button variant="contained" color="primary" component="span">
+                                <Button variant="contained" color="primary" onClick={updateInterests}>
                                     Guardar
-                </Button>
+                                </Button>
                             </ThemeProvider>
                         </Grid>
+                        {/* alert message */}
+                        <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity={submitStatus}>
+                                {
+                                    submitStatus === "success" ?
+                                        "Se han actualizado tus intereses con éxito" :
+                                        "Ocurrió un problema, inténtalo más tarde"
+                                }
+                            </Alert>
+                        </Snackbar>
                     </Grid>
                 </Grid>
             </div>

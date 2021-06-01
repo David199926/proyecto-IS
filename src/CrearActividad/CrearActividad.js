@@ -179,7 +179,7 @@ function CrearActividad() {
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
         setOpen(false);
-    };
+    }
 
     // clean activity data
     const cleanActivityData = () => {

@@ -23,9 +23,17 @@ const getUserCollabs = async (userId) => {
     });
     return collabs;
 }
+// actualizar al usuario
+const updateUser = async (user) => {
+    db.collection('docentes').doc(user.id).set(user)
+    .catch(err => {
+        throw err
+    })
+}
 
 module.exports = {
     getUser,
     getUserById,
     getUserCollabs,
+    updateUser,
 }

@@ -35,7 +35,10 @@ app.post('/new-activity', activityController.createActivity);
 app.post('/activity/:id', activityController.getActivity);
 // gets user info
 app.get('/user', docenteController.getUserInfo);
-
+// get user interests
+app.get('/user-interests', docenteController.getUserInterests);
+// update user interests
+app.post('/user-interests', docenteController.updateUserInterests)
 
 
 /**

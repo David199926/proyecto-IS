@@ -28,8 +28,31 @@ const getUserInfo = async (req, res) => {
 
     res.json(response)
 }
-
+// get user interests
+const getUserInterests = async (req, res) => {
+    const {id} = req.query;
+    docenteModel.getUserById(id)
+    .then((user) => {
+        res.json(user["intereses"]);
+    })
+}
+// update user interests
+const updateUserInterests = async (req, res) => {
+    const {interests, id} = req.body;
+    const user = await docenteModel.getUserById(id);
+    user.intereses = interests;
+    docenteModel.updateUser(user)
+    .then(() => {
+        res.json({ 'status': 'ok' });
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ 'status': 'failed' });
+    })
+}
 
 module.exports = {
     getUserInfo,
+    getUserInterests,
+    updateUserInterests
 }
