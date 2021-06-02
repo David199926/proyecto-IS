@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const {editActivity} = require('../controllers/EditActivityController');
+const {editActivity} = require('../controllers/activityController');
 
-router.post('/' , editActivity );
+router.post('/' , editActivity);
 
 
 module.exports = router;

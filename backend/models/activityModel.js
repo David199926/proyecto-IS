@@ -23,9 +23,17 @@ const getUserActivities = async (userId) => {
     });
     return activities;
 }
+// actualiza una actividad existente
+const updateActivity = async (activityId, activity) => {
+    db.collection('actividades').doc(activityId).set(activity)
+    .catch(err => {
+        throw err
+    })
+}
 
 module.exports = {
     uploadActivity,
     getActivity,
     getUserActivities,
+    updateActivity,
 }

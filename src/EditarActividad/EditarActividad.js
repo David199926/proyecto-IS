@@ -26,7 +26,7 @@ import { BACKEND_URL } from '../Constants/constants.js';
 
 function EditarActividad() {
     // activity to edit
-    let {id} = useParams();
+    const {id} = useParams();
 
     const visibilityValues = ['pública', 'privada'];
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
@@ -46,6 +46,7 @@ function EditarActividad() {
     const [startPeriod, setStartPeriod] = useState(periods[0]);
     const [finishPeriod, setFinishPeriod] = useState('');
     const [description, setDescription] = useState('Esta es una descripción');
+    const [collabs, setCollabs] = useState([]);
 
     // activitys interests
     const [interests, setInterests] = useState([]);
@@ -112,6 +113,7 @@ function EditarActividad() {
                 setInterests(relatedTopics);
                 setInterestsAvailable(availableTopics);
                 setActivityData(data["datos tipo"])
+                setCollabs(data["colaboradores"])
             }) 
         })
         
@@ -174,6 +176,11 @@ function EditarActividad() {
                 }
             </Grid>
         )
+    }
+
+    // get collaborators chips
+    const getCollabs = () => {
+        return "Falta hacer esto";
     }
 
     // draws file input component if needed
@@ -239,20 +246,6 @@ function EditarActividad() {
         setOpen(false);
     };
 
-    // clean activity data
-    const cleanActivityData = () => {
-        setTitle('');
-        setVisibility(visibilityValues[0]);
-        setCategory('');
-        setActivityType('');
-        setProgress(0);
-        setStartPeriod(periods[0]);
-        setFinishPeriod('');
-        setDescription('Esta es una descripción');
-        setInterests([]);
-        setActivityData(typeData[activityType].campos);
-    }
-
     // create activity
     const createActivity = (event) => {
         event.preventDefault();
@@ -263,6 +256,7 @@ function EditarActividad() {
             return false;
         }
         const activity = {
+            id, 
             codigoCreador: sessionStorage.getItem('userId'),
             title,
             visibility,
@@ -274,15 +268,14 @@ function EditarActividad() {
             description,
             interests: interests.map((interest) => interest.id),
             activityData,
-            interestsAvailable,
+            collabs,
         }
         // submits activity
-        axios.post(`${BACKEND_URL}/new-activity`, activity)
+        axios.post(`${BACKEND_URL}/edit`, activity)
             .then(({ data }) => {
                 const { status } = data;
                 setOpen(true);
                 setSubmitStatus(status === 'ok' ? 'success' : 'error');
-                if (status) cleanActivityData();
             })
     }
 
@@ -422,7 +415,7 @@ function EditarActividad() {
             {/* colaboradores de actividad */}
             <div className="colabs">
                 <h2>Colaboradores</h2>
-                <span>Crea la actividad antes de invitar colaboradores</span>
+                {getCollabs()}
             </div>
             
             {/* subir actividad */}
@@ -437,7 +430,7 @@ function EditarActividad() {
                 <Alert onClose={handleClose} severity={submitStatus}>
                     {
                         submitStatus === "success" ?
-                            "Se ha subido la actividad con éxito" :
+                            "Se ha actualizado la actividad con éxito" :
                             "Ocurrió un problema, inténtalo más tarde"
                     }
                 </Alert>
