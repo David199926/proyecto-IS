@@ -61,6 +61,7 @@ function LogInControls(props) {
                     // all is correctly
                     auth.login(() => {
                         sessionStorage.setItem('userId', user.id);
+                        auth.setUserData(user);
                         props.history.push('/mis-actividades');
                         return true;
                     });

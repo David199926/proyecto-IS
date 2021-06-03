@@ -27,6 +27,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import perfil from '../../Resources/Images/profile.png';
 import './AppBarDrawerD.css';
 
+// user data
+import auth from '../../auth';
+
 // const values
 const drawerWidth = 290;
 // styles
@@ -101,6 +104,22 @@ export default function AppBarDrawer(props) {
     setAnchorEl(null);
   };
 
+  const checkReportsPermission = () => {
+    if (auth.getUserData().directivo) {
+      return (
+        <ListItem button onClick={() =>props.history.push('/reporte')}>
+            <ListItemIcon>
+              <AssessmentIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Reportes'} />
+        </ListItem>
+      )
+    } else {
+      return null;
+    }
+    
+  }
+
   // logout function
   const logOut = () => {
     props.history.push('/');
@@ -116,12 +135,8 @@ export default function AppBarDrawer(props) {
       <Toolbar />
       <div className={classes.drawerContainer}>
         <List>
-          <ListItem button onClick={() =>props.history.push('/reporte')}>
-            <ListItemIcon>
-              <AssessmentIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Reportes'} />
-          </ListItem>
+          {/* es directivo */}
+          {checkReportsPermission()}
           <ListItem button>
             <ListItemIcon>
               <PeopleAltIcon />

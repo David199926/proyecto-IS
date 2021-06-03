@@ -1,6 +1,7 @@
 class Auth {
     constructor() {
         this.authenticated = false;
+        this.userData = {};
     }
 
     login(callback) {
@@ -15,6 +16,13 @@ class Auth {
 
     isAuthenticated() {
         return this.authenticated;
+    }
+
+    setUserData(userData) {
+        this.userData = userData;
+    }
+    getUserData() {
+        return this.userData;
     }
 }
 
