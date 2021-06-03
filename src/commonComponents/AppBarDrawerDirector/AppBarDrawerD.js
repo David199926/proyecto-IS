@@ -77,7 +77,13 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-  }
+  },
+  selectedDrawerItem: {
+    backgroundColor: '#FBECC1',
+    '&:hover': {
+      background: "#F2C94C",
+   },
+  },
 }));
 
 export default function AppBarDrawer(props) {
@@ -107,7 +113,11 @@ export default function AppBarDrawer(props) {
   const checkReportsPermission = () => {
     if (auth.getUserData().directivo) {
       return (
-        <ListItem button onClick={() =>props.history.push('/reporte')}>
+        <ListItem
+          button
+          onClick={() => props.history.push('/reporte')}
+          className={props.selected === "Reporte" ? classes.selectedDrawerItem : null}
+        >
             <ListItemIcon>
               <AssessmentIcon />
             </ListItemIcon>
@@ -137,25 +147,45 @@ export default function AppBarDrawer(props) {
         <List>
           {/* es directivo */}
           {checkReportsPermission()}
-          <ListItem button>
+          {/* colaboraciones */}
+          <ListItem
+            button
+            onClick={() => props.history.push('/colaboraciones')}
+            className={props.selected === "Colaboraciones" ? classes.selectedDrawerItem : null}
+          >
             <ListItemIcon>
               <PeopleAltIcon />
             </ListItemIcon>
             <ListItemText primary={'Colaboraciones'} />
           </ListItem>
-          <ListItem button onClick={() => props.history.push('/mis-actividades')}>
+          {/* mis actividades */}
+          <ListItem
+            button
+            onClick={() => props.history.push('/mis-actividades')}
+            className={props.selected === "Mis actividades" ? classes.selectedDrawerItem : null}
+          >
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary={'Mis actividades'} />
           </ListItem>
-          <ListItem button>
+          {/* explorar */}
+          <ListItem
+            button
+            onClick={() => props.history.push('/explorar')}
+            className={props.selected === "Explorar" ? classes.selectedDrawerItem : null}
+          >
             <ListItemIcon>
               <ExploreIcon />
             </ListItemIcon>
             <ListItemText primary={'Explorar'} />
           </ListItem>
-          <ListItem button>
+          {/* ayuda */}
+          <ListItem
+            button
+            onClick={() => props.history.push('/ayuda')}
+            className={props.selected === "Ayuda" ? classes.selectedDrawerItem : null}
+          >
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>

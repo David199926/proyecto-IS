@@ -22,7 +22,7 @@ function App() {
                 <AuthRoute path="/mis-actividades" component={(props) => {
                     return (
                         <div>
-                            <AppBarDrawerDirector {...props}/>
+                            <AppBarDrawerDirector {...props} selected="Mis actividades"/>
                             <MisActividades {...props}/>
                         </div>
                     )
@@ -31,7 +31,7 @@ function App() {
                 {/* crear actividad */}
                 <AuthRoute path="/crear" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props}>
+                        <AppBarDrawerDirector {...props} selected="Mis actividades">
                             <CrearActividad />
                         </AppBarDrawerDirector>
                     )
@@ -41,7 +41,7 @@ function App() {
                 {/* editar actividad */}
                 <AuthRoute path="/editar/:id" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props}>
+                        <AppBarDrawerDirector {...props} selected="Mis actividades">
                             <EditarActividad />
                         </AppBarDrawerDirector>
                     )
@@ -51,7 +51,7 @@ function App() {
                 <AuthRoute path="/reporte" component={(props) => {
                     return (
                         <div>
-                            <AppBarDrawerDirector {...props} />
+                            <AppBarDrawerDirector {...props} selected="Reporte"/>
                             <Reporte />
                         </div>
                     )
@@ -69,7 +69,7 @@ function App() {
                 {/* actividad de tercero */}
                 <AuthRoute path="/foranea" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props}>
+                        <AppBarDrawerDirector {...props} selected="Explorar">
                             <ActividadForanea />
                         </AppBarDrawerDirector>
                     )
