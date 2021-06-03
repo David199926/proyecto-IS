@@ -3,9 +3,12 @@ import MaterialTable from 'material-table'
 import { EditarActividad } from './EditarActividad';
 import { EliminarActividad } from './EliminarActividad';
 
-export const ActividadesAcademicas = ({history}) => {
+export const ActividadesAcademicas = () => {
 
   const [state, setState] = useState([{}]);
+  // for refreshing porpouses
+  const [refresher, setRefresher] = useState(false);
+  const refresh = () => {setRefresher(!refresher)}
 
 
   const getActividadesAcademicas = async () => {
@@ -25,7 +28,10 @@ export const ActividadesAcademicas = ({history}) => {
       auxiliarData.push({
         nombre: data[i].data['título'], tipo: data[i].data.tipo,
         progreso: data[i].data.progreso, fecha: data[i].data['periodo de inicio'],
-        acciones: <><EditarActividad idActividad={data[i].id} /> <EliminarActividad history={history} idActividad={data[i].id} /> </>
+        acciones: <div>
+                    <EditarActividad idActividad={data[i].id} />
+                    <EliminarActividad idActividad={data[i].id} refresh={refresh}/>
+                  </div>
       });
     }
 
@@ -35,6 +41,10 @@ export const ActividadesAcademicas = ({history}) => {
   useEffect(() => {
     getActividadesAcademicas();
   }, []);
+  // refresh when refresher changes
+  useEffect(() => {
+    getActividadesAcademicas();
+  }, [refresher]);
 
   const columnas = [
     { title: 'Nombre', field: 'nombre' },

@@ -8,14 +8,11 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 
 
-export const EliminarActividad = ({ idActividad, history }) => {
+export const EliminarActividad = ({ idActividad, refresh}) => {
 
     const [open, setOpen] = useState(false);
 
-
     const eliminar = async () => {
-
-
         const url = 'http://localhost:4000/mis-actividades/delete';
         const options = {
             method: 'POST',
@@ -26,10 +23,8 @@ export const EliminarActividad = ({ idActividad, history }) => {
         fetch(url, options)
             .then(response => response.json())
             .then(response => { console.log(response); })
-            .then(window.location.reload())
+            .then(refresh())
             .catch(err => console.log(err));
-
-
     }
 
 
@@ -49,9 +44,9 @@ export const EliminarActividad = ({ idActividad, history }) => {
 
             <Snackbar open={open} >
                 <Alert severity="warning">
-                    ¿Realmente quiere eliminar esta actividad? 
-                    <Button startIcon={<CheckIcon />} onClick={eliminar}/>
-                    <Button startIcon={<ClearIcon />} onClick={handleClose}/>
+                    ¿Realmente quiere eliminar esta actividad?
+                    <Button startIcon={<CheckIcon />} onClick={eliminar} />
+                    <Button startIcon={<ClearIcon />} onClick={handleClose} />
 
                 </Alert>
             </Snackbar>
