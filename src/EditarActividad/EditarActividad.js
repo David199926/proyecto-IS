@@ -15,6 +15,8 @@ import Progress from './Progress/Progress';
 import UploadFile from './UploadFile/UploadFile';
 
 import axios from 'axios';
+// user data
+import auth from '../auth';
 
 // styles
 import './EditarActividad.css';
@@ -60,7 +62,6 @@ function EditarActividad() {
 
     // component effects
 
-    
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
     useEffect(() => {
         const source = axios.CancelToken.source();
@@ -68,6 +69,9 @@ function EditarActividad() {
         axios.get(`${BACKEND_URL}/categories-types`, {cancelToken: source.token})
             .then(({ data }) => {
                 const typeData = data.typeData;
+                if (!auth.getUserData().directivo) {
+                    delete data.formatedCategories["Gestión"];
+                }
                 const categories = data.formatedCategories;
                 const categoryValues = Object.keys(categories);
 

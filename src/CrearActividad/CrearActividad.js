@@ -15,6 +15,9 @@ import {InterestsSelector} from '../commonComponents/InterestsSelector/Interests
 
 import axios from 'axios';
 
+// user data
+import auth from '../auth';
+
 // styles
 import './CrearActividad.css';
 
@@ -60,6 +63,9 @@ function CrearActividad() {
         axios.get(`${BACKEND_URL}/categories-types`, {cancelToken: source.token})
             .then(({ data }) => {
                 const typeData = data.typeData;
+                if (!auth.getUserData().directivo) {
+                    delete data.formatedCategories["Gestión"];
+                }
                 const categories = data.formatedCategories;
                 const categoryValues = Object.keys(categories);
 
