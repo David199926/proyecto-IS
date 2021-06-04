@@ -41,7 +41,7 @@ function App() {
                 <AuthRoute path="/editar/:id" component={(props) => {
                     return (
                         <AppBarDrawer {...props} selected="Mis actividades">
-                            <EditarActividad />
+                            <EditarActividad {...props}/>
                         </AppBarDrawer>
                     )
                 }} />
