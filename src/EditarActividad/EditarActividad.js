@@ -20,14 +20,18 @@ import auth from '../auth';
 
 // styles
 import '../CrearActividad/CrearActividad.css';
-import { useParams } from 'react-router-dom';
+import { useParams, withRouter, Prompt } from 'react-router-dom';
 
 // constants
 import { BACKEND_URL } from '../Constants/constants.js';
 
 function EditarActividad() {
+
+    // saved state
+    const [saved, setSaved] = useState(true);
+
     // activity to edit
-    const {id} = useParams();
+    const { id } = useParams();
 
     const visibilityValues = ['pública', 'privada'];
     const periods = ['2020-1', '2020-3', '2021-1', '2021-3'];
@@ -47,7 +51,6 @@ function EditarActividad() {
     const [startPeriod, setStartPeriod] = useState(periods[0]);
     const [finishPeriod, setFinishPeriod] = useState('');
     const [description, setDescription] = useState('Esta es una descripción');
-    const [collabs, setCollabs] = useState([]);
 
     // activitys interests
     const [interests, setInterests] = useState([]);
@@ -62,12 +65,11 @@ function EditarActividad() {
     const [file, setFile] = useState(null);
 
     // component effects
-
     // get activities categories from backend (ONLY ON COMPONENT MOUNT)
     useEffect(() => {
         const source = axios.CancelToken.source();
 
-        axios.get(`${BACKEND_URL}/categories-types`, {cancelToken: source.token})
+        axios.get(`${BACKEND_URL}/categories-types`, { cancelToken: source.token })
             .then(({ data }) => {
                 const typeData = data.typeData;
                 if (!auth.getUserData().directivo) {
@@ -91,51 +93,71 @@ function EditarActividad() {
             .catch(err => {
                 if (!axios.isCancel(err)) console.log(err);
             })
+            .then(() => setSaved(true))
+
         return () => source.cancel();
     }, []);
-    // get interests from backend (ONLY ON COMPONENT MOUNT)
+    // get activity data from backend (ONLY ON COMPONENT MOUNT)
     useEffect(() => {
         const source = axios.CancelToken.source();
 
-        axios.get(`${BACKEND_URL}/interests`, {cancelToken: source.token})
-        .then(({ data }) => {
-            let interests = data;
-            //setInterestsAvailable(data);
-            // get activity data
-            axios.post(`${BACKEND_URL}/activity/${id}`, {cancelToken: source.token})
+        axios.get(`${BACKEND_URL}/interests`, { cancelToken: source.token })
             .then(({ data }) => {
-                setTitle(data["título"]);
-                setVisibility(data["pública"] ? visibilityValues[0] : visibilityValues[1]);
-                setCategory(data["categoría"]);
-                setActivityType(data["tipo"]);
-                setProgress(data["progreso"]);
-                setStartPeriod(data["periodo de inicio"]);
-                setFinishPeriod(data["periodo de finalización"])
-                setDescription(data["descripción"]);
-                let interestCodes = data["temas relacionados"];
-                let relatedTopics = interests.filter((interest) => interestCodes.includes(interest.id));
-                let availableTopics = interests.filter((interest) => !interestCodes.includes(interest.id));
-                setInterests(relatedTopics);
-                setInterestsAvailable(availableTopics);
-                setActivityData(data["datos tipo"])
-                setCollabs(data["colaboradores"])
-            }) 
-        })
-        
+                let interests = data;
+                // get activity data
+                axios.post(`${BACKEND_URL}/activity/${id}`, { cancelToken: source.token })
+                    .then(({ data }) => {
+                        setTitle(data["título"]);
+                        setVisibility(data["pública"] ? visibilityValues[0] : visibilityValues[1]);
+                        setCategory(data["categoría"]);
+                        setActivityType(data["tipo"]);
+                        setProgress(data["progreso"]);
+                        setStartPeriod(data["periodo de inicio"]);
+                        setFinishPeriod(data["periodo de finalización"]);
+                        setDescription(data["descripción"]);
+
+                        let interestCodes = data["temas relacionados"];
+                        let relatedTopics = interests.filter((interest) => interestCodes.includes(interest.id));
+                        let availableTopics = interests.filter((interest) => !interestCodes.includes(interest.id));
+
+                        setInterests(relatedTopics);
+                        setInterestsAvailable(availableTopics);
+
+                        setActivityData(data["datos tipo"]);
+                    })
+                    .then(() => setSaved(true))
+            })
+
         return () => source.cancel();
     }, []);
     // get activitys collaborators
     useEffect(() => {
         const source = axios.CancelToken.source();
 
-        axios.get(`${BACKEND_URL}/collabs`, {params: {id}, cancelToken: source.token})
-        .then((response) => {
-            console.log(response.data)
-            setCollaborators(response.data)
-        })
+        axios.get(`${BACKEND_URL}/collabs`, { params: { id }, cancelToken: source.token })
+            .then((response) => {
+                setCollaborators(response.data);
+            })
+            .then(() => setSaved(true))
 
+        return () => source.cancel();
     }, []);
-    
+    // check if data changed
+    useEffect(() => {
+        setSaved(false);
+    }, [
+        title,
+        visibility,
+        category,
+        activityType,
+        progress,
+        startPeriod,
+        finishPeriod,
+        description,
+        interests,
+        collaborators,
+        activityData
+    ])
 
     // behaviors
 
@@ -153,7 +175,7 @@ function EditarActividad() {
                                     variant="outlined"
                                     fullWidth
                                     value={value}
-                                    InputProps={{required: true}}
+                                    InputProps={{ required: true }}
                                     onChange={(event) => {
                                         setActivityData({ ...activityData, [label]: event.target.value })
                                     }}
@@ -237,7 +259,7 @@ function EditarActividad() {
             return false;
         }
         const activity = {
-            id, 
+            id,
             codigoCreador: sessionStorage.getItem('userId'),
             title,
             visibility,
@@ -249,7 +271,7 @@ function EditarActividad() {
             description,
             interests: interests.map((interest) => interest.id),
             activityData,
-            collabs,
+            collabs: collaborators.map((coll) => coll.id),
         }
         // submits activity
         axios.post(`${BACKEND_URL}/edit`, activity)
@@ -257,11 +279,17 @@ function EditarActividad() {
                 const { status } = data;
                 setOpen(true);
                 setSubmitStatus(status === 'ok' ? 'success' : 'error');
+                // changes (may) have been saved
+                setSaved(true);
             })
     }
 
     return (
         <form className="main-container-crear" onSubmit={updateActivity}>
+            <Prompt
+                when={!saved}
+                message='¿Deseas salir sin guardar los cambios?'
+            />
             <h1>Editar actividad</h1>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={8}>
@@ -271,7 +299,7 @@ function EditarActividad() {
                         label="Título"
                         value={title}
                         variant="outlined"
-                        InputProps={{required: true}}
+                        InputProps={{ required: true }}
                         onChange={handleChange(setTitle)}
                         fullWidth
                     />
@@ -365,7 +393,7 @@ function EditarActividad() {
                         variant="outlined"
                         multiline
                         rows={4}
-                        InputProps={{required: true}}
+                        InputProps={{ required: true }}
                         fullWidth
                         onChange={handleChange(setDescription)}
                     />
@@ -401,7 +429,7 @@ function EditarActividad() {
                     Agregar más colaboradores
                 </Button>
             </div>
-            
+
             {/* subir actividad */}
             <Button
                 variant="contained"
@@ -423,4 +451,4 @@ function EditarActividad() {
     )
 }
 
-export default EditarActividad;
+export default withRouter(EditarActividad);
