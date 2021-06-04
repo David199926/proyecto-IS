@@ -18,6 +18,16 @@ export const theme = createMuiTheme({
                 marginTop: "1.5rem",
                 marginBottom: "1rem"
             }
+        },
+        MuiChip: {
+            root: {
+                marginRight: "1.5rem",
+            }
+        },
+        MuiButton: {
+            outlinedPrimary: {
+                color: "#000000DE"
+            }
         }
     }
 });

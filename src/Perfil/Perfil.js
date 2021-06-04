@@ -15,7 +15,7 @@ import { InterestsSelector } from '../commonComponents/InterestsSelector/Interes
 // styles
 import './Perfil.css';
 import perfil from '../Resources/Images/perfil.png'
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 // axios
 import axios from 'axios';
@@ -28,15 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#ffd413'
-        }
-    }
-});
-
 
 export default function Perfil() {
 
@@ -213,11 +204,9 @@ export default function Perfil() {
                         </div>
 
                         <Grid item xs={8} Style={" padding-top: 40px"}>
-                            <ThemeProvider theme={theme}>
-                                <Button variant="contained" color="primary" onClick={updateInterests}>
-                                    Guardar
-                                </Button>
-                            </ThemeProvider>
+                            <Button variant="contained" color="primary" onClick={updateInterests}>
+                                Guardar
+                            </Button>
                         </Grid>
                         {/* alert message */}
                         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>

@@ -3,24 +3,23 @@ import React, { useState, useEffect } from 'react';
 // Material UI
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 // alert message
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-
+// My components
 import Progress from '../commonComponents/Progress/Progress';
 import UploadFile from '../commonComponents/UploadFile/UploadFile';
-import {InterestsSelector} from '../commonComponents/InterestsSelector/InterestsSelector';
+import { InterestsSelector } from '../commonComponents/InterestsSelector/InterestsSelector';
+import { CollaboratorsView } from '../commonComponents/CollaboratorsView/CollaboratorsView';
 
 import axios from 'axios';
 // user data
 import auth from '../auth';
 
 // styles
-import './EditarActividad.css';
+import '../CrearActividad/CrearActividad.css';
 import { useParams } from 'react-router-dom';
 
 // constants
@@ -52,8 +51,10 @@ function EditarActividad() {
 
     // activitys interests
     const [interests, setInterests] = useState([]);
-    const [interestsAvailable, setInterestsAvailable] = useState([])
-    const [inputValues, setInputvalues] = useState([]);
+    const [interestsAvailable, setInterestsAvailable] = useState([]);
+
+    // activity collaborators
+    const [collaborators, setCollaborators] = useState([]);
 
     // activity data
     const [activityData, setActivityData] = useState({});
@@ -123,6 +124,17 @@ function EditarActividad() {
         
         return () => source.cancel();
     }, []);
+    // get activitys collaborators
+    useEffect(() => {
+        const source = axios.CancelToken.source();
+
+        axios.get(`${BACKEND_URL}/collabs`, {params: {id}, cancelToken: source.token})
+        .then((response) => {
+            console.log(response.data)
+            setCollaborators(response.data)
+        })
+
+    }, []);
     
 
     // behaviors
@@ -162,11 +174,6 @@ function EditarActividad() {
             </MenuItem>
         ))
         )
-    }
-
-    // get collaborators chips
-    const getCollabs = () => {
-        return "Falta hacer esto";
     }
 
     // draws file input component if needed
@@ -220,7 +227,7 @@ function EditarActividad() {
         setOpen(false);
     };
 
-    // create activity
+    // update activity
     const updateActivity = (event) => {
         event.preventDefault();
         // if user is not registered
@@ -386,7 +393,13 @@ function EditarActividad() {
             {/* colaboradores de actividad */}
             <div className="colabs">
                 <h2>Colaboradores</h2>
-                {getCollabs()}
+                <CollaboratorsView
+                    collaborators={collaborators}
+                    setCollaborators={setCollaborators}
+                />
+                <Button variant="outlined" color="primary">
+                    Agregar más colaboradores
+                </Button>
             </div>
             
             {/* subir actividad */}

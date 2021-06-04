@@ -19,7 +19,6 @@ export const InterestsSelector = (props) => {
                         <Chip
                             key={index}
                             label={option.nombre}
-                            className="interests-chips"
                             onDelete={handleDelete(option)}
                         />
                     ))

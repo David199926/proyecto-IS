@@ -86,10 +86,23 @@ const editActivity = async (req, res) => {
     })
 }
 
+const getCollaborators = async (req, res) => {
+    const {id} = req.query;
+    activityModel.getActivityCollabs(id)
+    .then((activity) => {
+        res.json(activity);
+    })
+    .catch(err => {
+        console.error(err);
+        res.json({ 'status': 'failed' });
+    })
+}
+
 
 module.exports = {
     getCategoriesAndTypes,
     createActivity,
     getActivity,
     editActivity,
+    getCollaborators,
 }

@@ -25,16 +25,21 @@ app.use(express.urlencoded({ extended: false}));
 
 // auth user in login
 app.post('/validate', logInController.validate);
+// gets user info
+app.get('/user', docenteController.getUserInfo);
+
 // get categories and typeData from db
 app.get('/categories-types', activityController.getCategoriesAndTypes);
 // get interests list
 app.get('/interests', interestsController.getInterests);
+
 //sube la actividad a la base de datos
 app.post('/new-activity', activityController.createActivity);
 // search for an activity in db
 app.post('/activity/:id', activityController.getActivity);
-// gets user info
-app.get('/user', docenteController.getUserInfo);
+// get activity collaborators
+app.get('/collabs', activityController.getCollaborators)
+
 // get user interests
 app.get('/user-interests', docenteController.getUserInterests);
 // update user interests
