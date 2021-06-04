@@ -5,14 +5,12 @@ import { ActividadesProfesionales } from './ActividadesProfesionales'
 import { NuevaActividad } from './NuevaActividad'
 
 export const MisActividades = (props) => {
-
-    //console.log('ID',sessionStorage.getItem('userId'));
     
     return (
         <div>
-            <Grid style={{ 'margin-top': '30px', 'margin-left': '320px' }}>
+            <Grid className="main-container-crear" container spacing={2}>
                 <Grid item>
-                    <Typography variant="h2">Mis Actividades</Typography>
+                    <h1>Mis Actividades</h1>
                 </Grid>
                 <Grid container spacing={5}>
                     <Grid item xs={11}>
