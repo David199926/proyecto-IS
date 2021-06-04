@@ -9,6 +9,7 @@ import { NuevaActividad } from './NuevaActividad'
 import auth from '../auth';
 
 export const MisActividades = (props) => {
+<<<<<<< HEAD
 
     const gestionCheck = () => {
         if (!auth.getUserData().directivo) return null;
@@ -20,6 +21,9 @@ export const MisActividades = (props) => {
 
     }
 
+=======
+    
+>>>>>>> 79f8f3c702e9e1d11cd66ccac45415e4533d8818
     return (
         <div>
             <Grid className="main-container-crear" container spacing={2}>
