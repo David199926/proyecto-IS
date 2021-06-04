@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import logo from '../../Resources/Images/logo.png';
+// styles
 import './LogInControls.css';
+// styles
+import { makeStyles } from '@material-ui/core/styles';
 
 // material ui
 import TextField from '@material-ui/core/TextField';
@@ -20,8 +23,19 @@ import { BACKEND_URL } from '../../Constants/constants.js';
 import auth from '../../auth';
 const EMPTY_MESSAGE = "Este campo es obligatorio";
 
+// styles
+const useStyles = makeStyles((theme) => ({
+    Link: {
+        textDecoration: 'none',
+        color: theme.palette.text.primary
+    }
+}));
+
 function LogInControls(props) {
-    
+
+    // styles
+    const classes = useStyles();
+
     // state
     const [rememberMe, setRememberMe] = useState(false);
     const [username, setUsername] = useState("");
@@ -56,7 +70,7 @@ function LogInControls(props) {
             password,
         })
             .then(response => {
-                const {error, user} = response.data;
+                const { error, user } = response.data;
                 if (error === null) {
                     // all is correctly
                     auth.login(() => {
@@ -121,7 +135,7 @@ function LogInControls(props) {
                                     <Checkbox color="primary" checked={rememberMe} onChange={handleCheck(setRememberMe)} />
                                 }
                             />
-                            <Link href="#">¿Olvidó su contraseña?</Link>
+                            <Link className={classes.Link} >¿Olvidó su contraseña?</Link>
                         </div>
                     </Grid>
                 </Grid>

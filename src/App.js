@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // my components
-import AppBarDrawerDirector from './commonComponents/AppBarDrawerDirector/AppBarDrawerD';
+import AppBarDrawer from './commonComponents/AppBarDrawer/AppBarDrawer';
 import { ActividadForanea } from './ActividadForanea/ActividadForanea';
 import { MisActividades } from './misActividades/MisActividades';
 import LogIn from './LogIn/LogIn';
@@ -21,19 +21,18 @@ function App() {
                 {/* mostrar mis actividades */}
                 <AuthRoute path="/mis-actividades" component={(props) => {
                     return (
-                        <div>
-                            <AppBarDrawerDirector {...props} selected="Mis actividades"/>
+                        <AppBarDrawer {...props} selected="Mis actividades">
                             <MisActividades {...props}/>
-                        </div>
+                        </AppBarDrawer>
                     )
                 }} />
 
                 {/* crear actividad */}
                 <AuthRoute path="/crear" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props} selected="Mis actividades">
+                        <AppBarDrawer {...props} selected="Mis actividades">
                             <CrearActividad />
-                        </AppBarDrawerDirector>
+                        </AppBarDrawer>
                     )
                 }
                 } />
@@ -41,37 +40,36 @@ function App() {
                 {/* editar actividad */}
                 <AuthRoute path="/editar/:id" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props} selected="Mis actividades">
+                        <AppBarDrawer {...props} selected="Mis actividades">
                             <EditarActividad />
-                        </AppBarDrawerDirector>
+                        </AppBarDrawer>
                     )
                 }} />
 
                 {/* reporte personalizado */}
                 <AuthRoute path="/reporte" component={(props) => {
                     return (
-                        <div>
-                            <AppBarDrawerDirector {...props} selected="Reporte"/>
+                        <AppBarDrawer {...props} selected="Reporte">
                             <Reporte />
-                        </div>
+                        </AppBarDrawer>
                     )
                 }} />
 
                 {/* info del perfil de usuario*/}
                 <AuthRoute path="/perfil" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props}>
+                        <AppBarDrawer {...props}>
                             <Perfil />
-                        </AppBarDrawerDirector>
+                        </AppBarDrawer>
                     )
                 }} />
 
                 {/* actividad de tercero */}
                 <AuthRoute path="/foranea" component={(props) => {
                     return (
-                        <AppBarDrawerDirector {...props} selected="Explorar">
+                        <AppBarDrawer {...props} selected="Explorar">
                             <ActividadForanea />
-                        </AppBarDrawerDirector>
+                        </AppBarDrawer>
                     )
                 }} />
 

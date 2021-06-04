@@ -18,8 +18,6 @@ const getAcademicas = async (req, res) =>{
     });
     
     await res.json(myActivities);
-
- 
 }
 
 const getProfesionales = async (req , res) => {
@@ -35,12 +33,24 @@ const getProfesionales = async (req , res) => {
            let response = await {data: doc.data() , id: doc.id};
            myActivities.push(response);
        });
-
-
    });
-   
    await res.json(myActivities);
+}
+const getGestion = async (req , res) => {
+    
+    let myActivities = [];
 
+    await db.collection("actividades")
+    .where('categoría' , '==' , 'Gestión')
+    .where('codigoCreador' , '==' , req.body.codigoCreador)
+    .get().then((querySnapshot) => {
+       
+       querySnapshot.forEach(async (doc) => {
+           let response = await {data: doc.data() , id: doc.id};
+           myActivities.push(response);
+       });
+   });
+   await res.json(myActivities);
 }
 
 const deleteActivity = async (req, res) => {
@@ -50,5 +60,6 @@ const deleteActivity = async (req, res) => {
 module.exports ={
     getAcademicas,
     getProfesionales,
+    getGestion,
     deleteActivity
 }

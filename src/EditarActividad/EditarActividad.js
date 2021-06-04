@@ -11,8 +11,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
-import Progress from './Progress/Progress';
-import UploadFile from './UploadFile/UploadFile';
+import Progress from '../commonComponents/Progress/Progress';
+import UploadFile from '../commonComponents/UploadFile/UploadFile';
+import {InterestsSelector} from '../commonComponents/InterestsSelector/InterestsSelector';
 
 import axios from 'axios';
 // user data
@@ -20,7 +21,6 @@ import auth from '../auth';
 
 // styles
 import './EditarActividad.css';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
 
 // constants
@@ -164,24 +164,6 @@ function EditarActividad() {
         )
     }
 
-    // get insterest chips
-    const getInterestChips = () => {
-        return (
-            <Grid item xs={12}>
-                {
-                    interests.map((option, index) => (
-                        <Chip
-                            key={index}
-                            label={option.nombre}
-                            className="interests-chips"
-                            onDelete={handleDelete(option)}
-                        />
-                    ))
-                }
-            </Grid>
-        )
-    }
-
     // get collaborators chips
     const getCollabs = () => {
         return "Falta hacer esto";
@@ -232,18 +214,6 @@ function EditarActividad() {
         setActivityType(value);
         setActivityData(typeData[value].campos || {});
     }
-    // handle interest input
-    const pushInterest = (event, newValue) => {
-        if (newValue == null) return null;
-        setInterests([...interests, newValue]);
-        setInterestsAvailable(interestsAvailable.filter((value) => value.id !== newValue.id));
-        setInputvalues([]);
-    }
-    // handle delete interest input
-    const handleDelete = (chipToDelete) => () => {
-        setInterests((interests) => interests.filter((interest) => interest.id !== chipToDelete.id));
-        setInterestsAvailable([...interestsAvailable, chipToDelete]);
-    };
     // handle close SnackBar
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
@@ -251,7 +221,7 @@ function EditarActividad() {
     };
 
     // create activity
-    const createActivity = (event) => {
+    const updateActivity = (event) => {
         event.preventDefault();
         // if user is not registered
         if (sessionStorage.getItem('userId') == null) {
@@ -284,7 +254,7 @@ function EditarActividad() {
     }
 
     return (
-        <form className="main-container-crear" onSubmit={createActivity}>
+        <form className="main-container-crear" onSubmit={updateActivity}>
             <h1>Editar actividad</h1>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={8}>
@@ -395,16 +365,13 @@ function EditarActividad() {
                 </Grid>
                 <Grid item xs={12}>
                     {/* Input Temas de interés de la actividad */}
-                    <Autocomplete
-                        options={interestsAvailable}
-                        getOptionLabel={(interest) => interest.nombre}
-                        value={inputValues}
-                        onChange={pushInterest}
-                        renderInput={(params) => <TextField {...params} label="Temas de interés" variant="outlined" fullWidth />}
+                    <InterestsSelector
+                        interests={interests}
+                        setInterests={setInterests}
+                        interestsAvailable={interestsAvailable}
+                        setInterestsAvailable={setInterestsAvailable}
                     />
                 </Grid>
-                {/* Chips Temas de interés de la actividad */}
-                {getInterestChips()}
             </Grid>
 
             {/* datos de actividad */}

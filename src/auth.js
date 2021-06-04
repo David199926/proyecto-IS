@@ -21,6 +21,7 @@ class Auth {
     setUserData(userData) {
         this.userData = userData;
     }
+    
     getUserData() {
         return this.userData;
     }

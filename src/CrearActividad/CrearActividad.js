@@ -9,8 +9,8 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
-import Progress from './Progress/Progress';
-import UploadFile from './UploadFile/UploadFile';
+import Progress from '../commonComponents/Progress/Progress';
+import UploadFile from '../commonComponents/UploadFile/UploadFile';
 import {InterestsSelector} from '../commonComponents/InterestsSelector/InterestsSelector';
 
 import axios from 'axios';

@@ -3,16 +3,19 @@ import MaterialTable from 'material-table'
 import { EditarActividad } from './EditarActividad';
 import { EliminarActividad } from './EliminarActividad';
 
-export const ActividadesAcademicas = () => {
+export const TableActivities = ({dataSource, title}) => {
 
   const [state, setState] = useState([{}]);
   // for refreshing porpouses
   const [refresher, setRefresher] = useState(false);
-  const refresh = () => {setRefresher(!refresher)}
+  const refresh = () => { 
+    console.log();
+    setRefresher(!refresher) 
+  }
 
 
   const getActividadesAcademicas = async () => {
-    const url = 'http://localhost:4000/mis-actividades/academicas';
+    const url = `http://localhost:4000/${dataSource}`;
 
     const options = {
       method: 'POST',
@@ -26,12 +29,14 @@ export const ActividadesAcademicas = () => {
 
     for (let i = 0; i < data.length; i++) {
       auxiliarData.push({
-        nombre: data[i].data['título'], tipo: data[i].data.tipo,
-        progreso: data[i].data.progreso, fecha: data[i].data['periodo de inicio'],
+        nombre: data[i].data['título'],
+        tipo: data[i].data.tipo,
+        progreso: data[i].data.progreso,
+        fecha: data[i].data['periodo de inicio'],
         acciones: <div>
-                    <EditarActividad idActividad={data[i].id} />
-                    <EliminarActividad idActividad={data[i].id} refresh={refresh}/>
-                  </div>
+          <EditarActividad idActividad={data[i].id} />
+          <EliminarActividad idActividad={data[i].id} refresh={refresh} />
+        </div>
       });
     }
 
@@ -58,20 +63,19 @@ export const ActividadesAcademicas = () => {
 
   return (
 
-    <div style={{ maxWidth: '100%' }}>
+    <div style={{ width: '100%' }}>
 
       <MaterialTable
         columns={columnas}
         data={data}
-        title="Academicas"
+        title={title}
         options={
           {
             paging: false,
             search: true,
-            draggable: false
+            draggable: false,
           }
         }
-
         localization={
           {
             toolbar: { searchPlaceholder: 'Buscar actividad' },

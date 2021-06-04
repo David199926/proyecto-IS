@@ -2,27 +2,23 @@ import React , {useState , useEffect}from 'react'
 import {Button} from '@material-ui/core'
 import { Link } from 'react-router-dom';
 
-export const NuevaActividad = (props) => {
+// styles
+import { makeStyles } from '@material-ui/core/styles';
 
-    const redirectToCreate = () => { props.history.push('/crear') }
+// styles
+const useStyles = makeStyles((theme) => ({
+    Link: {
+      textDecoration: 'none',
+      color: theme.palette.text.primary
+    }
+  }));
 
-    const [state,setState] = useState({});
+export const NuevaActividad = () => {
 
-    useEffect(
-        () => {
-            setState(props);
-        }
-    ,[]);
+    const classes = useStyles();
 
-    useEffect(
-        () => {
-            setState(props);
-        }
-    ,[props]);
-
-   
     return (
-        <Link to='/crear'>
+        <Link to='/crear' className={classes.Link}>
             <Button variant="contained" color="primary" >Nueva actividad +</Button>
         </Link>
     )
