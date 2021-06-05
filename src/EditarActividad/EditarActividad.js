@@ -20,12 +20,12 @@ import auth from '../auth';
 
 // styles
 import '../CrearActividad/CrearActividad.css';
-import { useParams, withRouter, Prompt } from 'react-router-dom';
+import { useParams, withRouter, Prompt, Link } from 'react-router-dom';
 
 // constants
 import { BACKEND_URL } from '../Constants/constants.js';
 
-function EditarActividad() {
+function EditarActividad(props) {
 
     // saved state
     const [saved, setSaved] = useState(true);
@@ -425,7 +425,11 @@ function EditarActividad() {
                     collaborators={collaborators}
                     setCollaborators={setCollaborators}
                 />
-                <Button variant="outlined" color="primary">
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => props.history.push(`/invitar/${id}`)}
+                >
                     Agregar más colaboradores
                 </Button>
             </div>

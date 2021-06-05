@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 // Material UI
 import Chip from '@material-ui/core/Chip';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -7,9 +7,9 @@ import TextField from '@material-ui/core/TextField';
 
 export const InterestsSelector = (props) => {
 
-    const {interests, interestsAvailable, setInterests, setInterestsAvailable} = props;
+    const { interests, interestsAvailable, setInterests, setInterestsAvailable } = props;
     const [inputValues, setInputvalues] = useState([]);
-    
+
     // get insterest chips
     const getInterestChips = () => {
         return (
@@ -42,15 +42,15 @@ export const InterestsSelector = (props) => {
     return (
         <div>
             <Autocomplete
-                        options={interestsAvailable}
-                        getOptionLabel={(interest) => interest.nombre}
-                        value={inputValues}
-                        onChange={pushInterest}
-                        renderInput={(params) => <TextField {...params} label="Temas de interés" variant="outlined" fullWidth />}
-                        Style={"margin-bottom: .8rem"}
-                    />
-                {/* Chips Temas de interés de la actividad */}
-                {getInterestChips()}
+                options={interestsAvailable}
+                getOptionLabel={(interest) => interest.nombre}
+                value={inputValues}
+                onChange={pushInterest}
+                renderInput={(params) => <TextField {...params} label="Temas de interés" variant="outlined" fullWidth />}
+                Style={"margin-bottom: .8rem"}
+            />
+            {/* Chips Temas de interés de la actividad */}
+            {getInterestChips()}
         </div>
     )
 }

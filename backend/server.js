@@ -27,6 +27,8 @@ app.use(express.urlencoded({ extended: false}));
 app.post('/validate', logInController.validate);
 // gets user info
 app.get('/user', docenteController.getUserInfo);
+// get possible colaborators
+app.get('/others', docenteController.getOthers);
 
 // get categories and typeData from db
 app.get('/categories-types', activityController.getCategoriesAndTypes);

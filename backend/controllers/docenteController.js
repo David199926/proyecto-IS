@@ -50,9 +50,18 @@ const updateUserInterests = async (req, res) => {
         res.json({ 'status': 'failed' });
     })
 }
+// get all possible colaborators
+const getOthers = (req, res) => {
+    const {id} = req.query;
+    docenteModel.getOthers(id)
+    .then((response) => {
+        res.json(response);
+    })
+}
 
 module.exports = {
     getUserInfo,
     getUserInterests,
-    updateUserInterests
+    updateUserInterests,
+    getOthers
 }

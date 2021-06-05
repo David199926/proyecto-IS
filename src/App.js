@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppBarDrawer from './commonComponents/AppBarDrawer/AppBarDrawer';
 import { ActividadForanea } from './ActividadForanea/ActividadForanea';
 import { MisActividades } from './misActividades/MisActividades';
+import { InvitarColaboradores } from './InvitarColaboradores/InvitarColaboradores';
 import LogIn from './LogIn/LogIn';
 import CrearActividad from './CrearActividad/CrearActividad';
 import EditarActividad from './EditarActividad/EditarActividad';
@@ -42,6 +43,15 @@ function App() {
                     return (
                         <AppBarDrawer {...props} selected="Mis actividades">
                             <EditarActividad {...props}/>
+                        </AppBarDrawer>
+                    )
+                }} />
+
+                {/* invitar colaboradores */}
+                <AuthRoute path="/invitar/:id" component={(props) => {
+                    return (
+                        <AppBarDrawer {...props} selected="Mis actividades">
+                            <InvitarColaboradores />
                         </AppBarDrawer>
                     )
                 }} />
