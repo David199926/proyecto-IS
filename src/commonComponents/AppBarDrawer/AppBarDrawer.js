@@ -152,7 +152,7 @@ export default function AppBarDrawer(props) {
           <ListItem
             button
             onClick={() => props.history.push('/colaboraciones')}
-            className={props.selected === "Colaboraciones" ? classes.selectedDrawerItem : null}
+            selected={props.selected === "Colaboraciones"}
           >
             <ListItemIcon>
               <PeopleAltIcon />
@@ -163,7 +163,7 @@ export default function AppBarDrawer(props) {
           <ListItem
             button
             onClick={() => props.history.push('/mis-actividades')}
-            className={props.selected === "Mis actividades" ? classes.selectedDrawerItem : null}
+            selected={props.selected == "Mis actividades"}
           >
             <ListItemIcon>
               <AssignmentIcon />
@@ -174,7 +174,7 @@ export default function AppBarDrawer(props) {
           <ListItem
             button
             onClick={() => props.history.push('/explorar')}
-            className={props.selected === "Explorar" ? classes.selectedDrawerItem : null}
+            selected={props.selected == "Explorar"}
           >
             <ListItemIcon>
               <ExploreIcon />
@@ -185,7 +185,7 @@ export default function AppBarDrawer(props) {
           <ListItem
             button
             onClick={() => props.history.push('/ayuda')}
-            className={props.selected === "Ayuda" ? classes.selectedDrawerItem : null}
+            selected={props.selected == "Ayuda"}
           >
             <ListItemIcon>
               <HelpOutlineIcon />

@@ -49,15 +49,15 @@ const createActivity = async (req, res) => {
 }
 
 const getActivity = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     activityModel.getActivity(id)
-    .then((activity) => {
-        res.json(activity);
-    })
-    .catch(err => {
-        console.error(err);
-        res.json({ 'status': 'failed' });
-    })
+        .then((activity) => {
+            res.json(activity);
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ 'status': 'failed' });
+        })
 }
 
 const editActivity = async (req, res) => {
@@ -77,25 +77,61 @@ const editActivity = async (req, res) => {
         "temas relacionados": req.body.interests,
     }
     activityModel.updateActivity(activityId, activity)
-    .then(() => {
-        res.json({ 'status': 'ok' });
-    })
-    .catch(err => {
-        console.error(err);
-        res.json({ 'status': 'failed' });
-    })
+        .then(() => {
+            res.json({ 'status': 'ok' });
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ 'status': 'failed' });
+        })
 }
 
 const getCollaborators = async (req, res) => {
-    const {id} = req.query;
+    const { id } = req.query;
     activityModel.getActivityCollabs(id)
-    .then((activity) => {
-        res.json(activity);
-    })
-    .catch(err => {
-        console.error(err);
-        res.json({ 'status': 'failed' });
-    })
+        .then((collabs) => {
+            res.json(collabs);
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ 'status': 'failed' });
+        })
+}
+
+const getNoCollaborators = async (req, res) => {
+    const {activityId } = req.query;
+    activityModel.getActivityNoCollabs(activityId)
+        .then((collabs) => {
+            res.json(collabs);
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ 'status': 'failed' });
+        })
+}
+
+const inviteCollaborators = async (req, res) => {
+    const collaborators = req.body;
+    const { id } = req.params;
+
+    activityModel.getActivity(id).
+        then((activity) => {
+            collaborators.forEach(collaborator => {
+                if (!activity.colaboradores.includes(collaborator)) {
+                    activity.colaboradores.push(collaborator);
+                }
+            })
+            activityModel.updateActivity(id, activity)
+                .then(() => { res.json({ 'status': 'ok' }) })
+                .catch(err => {
+                    res.json({ 'status': 'failed' });
+                    throw err;
+                })
+        })
+        .catch(err => {
+            res.json({ 'status': 'failed' });
+            throw err;
+        })
 }
 
 
@@ -105,4 +141,6 @@ module.exports = {
     getActivity,
     editActivity,
     getCollaborators,
+    getNoCollaborators,
+    inviteCollaborators
 }

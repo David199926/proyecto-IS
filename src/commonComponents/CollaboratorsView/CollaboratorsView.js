@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export const CollaboratorsView = ({ collaborators, setCollaborators }) => {
+export const CollaboratorsView = ({ collaborators, setCollaborators, customEmptyMessage }) => {
 
     // styles
     const classes = useStyles();
@@ -24,7 +24,7 @@ export const CollaboratorsView = ({ collaborators, setCollaborators }) => {
     };
     // get collaborators chips
     const getCollabs = () => {
-        if (collaborators.length === 0) return "No hay colaboradores para esta actividad";
+        if (collaborators.length === 0) return customEmptyMessage || "No hay colaboradores para esta actividad";
         return (collaborators.map((option, index) => (
             <Chip
                 key={index}

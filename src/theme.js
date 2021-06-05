@@ -28,6 +28,16 @@ export const theme = createMuiTheme({
             outlinedPrimary: {
                 color: "#000000DE"
             }
+        },
+        MuiListItem: {
+            root: {
+                '&$selected': {
+                    backgroundColor: "#f4d36f",
+                },
+                '&$selected:hover': {
+                    backgroundColor: "#F2C94C",
+                }
+            }
         }
     }
 });
