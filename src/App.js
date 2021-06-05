@@ -43,6 +43,7 @@ function App() {
                     return (
                         <AppBarDrawer {...props} selected="Mis actividades">
                             <EditarActividad {...props}/>
+<<<<<<< HEAD
                         </AppBarDrawer>
                     )
                 }} />
@@ -52,6 +53,8 @@ function App() {
                     return (
                         <AppBarDrawer {...props} selected="Mis actividades">
                             <InvitarColaboradores />
+=======
+>>>>>>> 2df43a635bc0e84a6e23e5255ab7b1a882f04820
                         </AppBarDrawer>
                     )
                 }} />
