@@ -27,8 +27,6 @@ app.use(express.urlencoded({ extended: false}));
 app.post('/validate', logInController.validate);
 // gets user info
 app.get('/user', docenteController.getUserInfo);
-// get possible colaborators
-app.get('/others', docenteController.getOthers);
 
 // get categories and typeData from db
 app.get('/categories-types', activityController.getCategoriesAndTypes);
@@ -40,12 +38,16 @@ app.post('/new-activity', activityController.createActivity);
 // search for an activity in db
 app.post('/activity/:id', activityController.getActivity);
 // get activity collaborators
-app.get('/collabs', activityController.getCollaborators)
+app.get('/collabs', activityController.getCollaborators);
+// get activity no collaborators
+app.get('/no-collaborators', activityController.getNoCollaborators);
+// send collaboration invitations
+app.post('/invite/:id', activityController.inviteCollaborators)
 
 // get user interests
 app.get('/user-interests', docenteController.getUserInterests);
 // update user interests
-app.post('/user-interests', docenteController.updateUserInterests)
+app.post('/user-interests', docenteController.updateUserInterests);
 
 
 /**

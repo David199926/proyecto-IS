@@ -30,6 +30,24 @@ const getActivityCollabs = async (activityId) => {
     return response;
 }
 
+// obtener los no colaboradores de una actividad
+const getActivityNoCollabs = async (activityId) => {
+    const response = [];
+    const doc = await db.collection('actividades').doc(activityId).get();
+    const collabs = doc.data().colaboradores;
+    const others = await docenteModel.getOthers(doc.data().codigoCreador);
+    for (other of others) {
+        if (!collabs.includes(other.id)) {
+            response.push({
+                id: other.id,
+                fullName: other.fullName,
+                interests: other.interests,
+            });
+        }
+    }
+    return response;
+}
+
 // obtener todas las actividades de un docente
 const getUserActivities = async (userId) => {
     let activities = [];
@@ -52,6 +70,7 @@ module.exports = {
     uploadActivity,
     getActivity,
     getActivityCollabs,
+    getActivityNoCollabs,
     getUserActivities,
     updateActivity,
 }
