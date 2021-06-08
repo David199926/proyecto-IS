@@ -14,12 +14,13 @@ export const ActividadForanea = () => {
 
     const [state, setState] = useState({});
     const {activityid} = useParams();
-    
+
     const obtenerActividad = async () => {
-        const url = `${BACKEND_URL}/categories-types`
+        const url = `${BACKEND_URL}/activity/${activityid}`
         const response = await fetch(url);
         const data = await response.json();
 
+        alert(data);
         return data;
     }
 
