@@ -9,6 +9,7 @@ import CrearActividad from './CrearActividad/CrearActividad';
 import EditarActividad from './EditarActividad/EditarActividad';
 import Reporte from './Reporte/Forms1/Reportes';
 import Perfil from './Perfil/Perfil';
+import {Explorar} from './Explorar/Explorar';
 //my routing
 import { AuthRoute } from './commonComponents/AuthRoute/AuthRoute';
 
@@ -75,10 +76,18 @@ function App() {
                 }} />
 
                 {/* actividad de tercero */}
-               <AuthRoute path="/foranea/:activityid" component={(props) => {
+                <AuthRoute path="/foranea/:activityid" component={(props) => {
                     return (
                         <AppBarDrawer {...props} selected="Explorar">
                             <ActividadForanea />
+                        </AppBarDrawer>
+                    )
+                }} />
+
+                <AuthRoute path="/explorar" component={(props) => {
+                    return (
+                        <AppBarDrawer {...props} selected="Explorar">
+                            <Explorar />
                         </AppBarDrawer>
                     )
                 }} />
