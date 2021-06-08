@@ -13,6 +13,7 @@ const MyActivities = require('./routes/MyActivities.routes');
 const ForeignActivity = require('./routes/ForeignActivity.routes');
 const EditActivity = require('./routes/EditActivity.routes');
 const ListOfForeignActivities = require('./routes/ListOfForeignActivities.routes');
+const listActivities= require("./routes/listActivities.routes");
 
 require('dotenv').config();
 
@@ -57,6 +58,7 @@ app.use('/mis-actividades' , MyActivities);
 app.use('/foranea', ForeignActivity);
 app.use('/edit', EditActivity);
 app.use('/activities/public' , ListOfForeignActivities);
+app.use('/publicActivities', listActivities );
 
 
 app.listen(port, () => {
