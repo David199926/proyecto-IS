@@ -75,7 +75,7 @@ function App() {
                 }} />
 
                 {/* actividad de tercero */}
-                <AuthRoute path="/foranea" component={(props) => {
+               <AuthRoute path="/foranea/:activityid" component={(props) => {
                     return (
                         <AppBarDrawer {...props} selected="Explorar">
                             <ActividadForanea />
