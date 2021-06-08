@@ -209,7 +209,7 @@ export default function Perfil() {
                             </Button>
                         </Grid>
                         {/* alert message */}
-                        <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                        <Snackbar open={open} autoHideDuration={4000} >
                             <Alert onClose={handleClose} severity={submitStatus}>
                                 {
                                     submitStatus === "success" ?
