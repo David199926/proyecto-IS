@@ -16,8 +16,12 @@ export const ActividadForanea = () => {
     const {activityid} = useParams();
 
     const obtenerActividad = async () => {
-        const url = `${BACKEND_URL}/activity/${activityid}`
-        const response = await fetch(url);
+        const url = `${BACKEND_URL}/activity/${activityid}`;
+        const options = {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json', 'Accept': 'application/json' },  
+        }
+        const response = await fetch(url, options);
         const data = await response.json();
 
         alert(data);
