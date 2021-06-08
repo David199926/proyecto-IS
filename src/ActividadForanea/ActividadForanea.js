@@ -6,15 +6,17 @@ import { DescripCionActividad } from './DescripCionActividad';
 import { InformacionActividad } from './InformacionActividad';
 import { SolicitarColaboracion } from './SolicitarColaboracion';
 import { TemasRelacionados } from './TemasRelacionados';
-
+import {BACKEND_URL} from '../Constants/constants'
+import { useParams } from 'react-router-dom'
 import './component.css'
 
 export const ActividadForanea = () => {
 
     const [state, setState] = useState({});
-
+    const {activityid} = useParams();
+    
     const obtenerActividad = async () => {
-        const url = 'http://localhost:4000/actividad-foranea'
+        const url = `${BACKEND_URL}/categories-types`
         const response = await fetch(url);
         const data = await response.json();
 
