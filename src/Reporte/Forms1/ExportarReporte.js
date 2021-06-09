@@ -49,7 +49,11 @@ function ExportReport() {
                 </Grid>
                 <Grid item xs={4}> 
                 <Grid container direction="row">
-                <Button variant="contained" color="secondary" component="span">
+
+                <Button 
+                type="submit"
+                variant="contained"
+                color="secondary">
                   Exportar
                  </Button>
                 </Grid>

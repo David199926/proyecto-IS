@@ -24,7 +24,7 @@ function GeneReports() {
         'Actividades de un docente durante un periodo académico', 
         'Docentes que han registrado actividades',
         'Docentes que no han registrado actividades durante un periodo académico',
-        'docente que más actividades ha registrado'
+        'Docente que más actividades ha registrado'
     ];
 
     // component state
