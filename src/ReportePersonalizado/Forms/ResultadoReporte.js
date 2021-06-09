@@ -2,6 +2,7 @@ import * as React from 'react';
 import { TableContainer, Table, TableHead, TableBody, TableCell, TableRow } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import './styleForms.css'
+import Grid from '@material-ui/core/Grid';
 
 const data=[
     {actividad:'Actividad 1', clasificacion: 'Gestión', tipo: 'tipo 1', periodo:'2021-1', autor:'Juan Manuel Molina' },
@@ -12,18 +13,18 @@ const data=[
 ]
 
 const styles = makeStyles({
-    tablaMaterial: {
-        minWidth: 530
-    }
+    
 })
 
 export default function ResultReport() {
     const classes=styles();
   return (
     <div className="resultR" >
+        <Grid container spacing={2} alignItems="center" >
+        <Grid item xs={12}>
         <h2>Resultado Reporte</h2>
-        <TableContainer aling="center">
-            <Table className ={classes.tablaMaterial}>
+        <TableContainer aling="center"  >
+            <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Actividad</TableCell>
@@ -47,7 +48,8 @@ export default function ResultReport() {
                 </TableBody>
             </Table>
         </TableContainer>
-
+        </Grid>
+        </Grid>
     </div>
   );
 }

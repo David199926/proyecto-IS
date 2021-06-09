@@ -184,11 +184,12 @@ function GeneReport() {
 
                 <Grid container direction="row" justify="flex-end">
                 <Button
-                    type="submit"
                     variant="contained"
-                    color="secondary"
+                    color="primary"
+                    type="submit"
                     fullWidth
                 >
+                    
                     Aplicar
                 </Button>
             </Grid>

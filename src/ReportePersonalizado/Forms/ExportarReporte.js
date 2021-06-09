@@ -30,9 +30,9 @@ function ExportReport() {
     }
     
     return (
-        <div className="exportR"  Style={" padding-top: 60px "  }>
-            <Grid container spacing={0} alignItems="center" justify="center" >
-                <Grid item xs={5} >
+        <div className="exportR">
+            <Grid container spacing={2} alignItems="center" justify="center">
+                <Grid item xs={4}>
                     {/* periodo académico de inicio */}
                     <TextField
                         id="startExportar"
@@ -50,7 +50,10 @@ function ExportReport() {
                 </Grid>
                 <Grid item xs={4}> 
                 <Grid container direction="row" alignItems="center" justify="center">
-                <Button variant="contained" color="secondary" component="span">
+                <Button 
+                variant="contained"
+                color="primary"
+                type="submit">
                   Exportar
                  </Button>
                 </Grid>
