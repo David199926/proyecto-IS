@@ -7,7 +7,8 @@ import { InvitarColaboradores } from './InvitarColaboradores/InvitarColaboradore
 import LogIn from './LogIn/LogIn';
 import CrearActividad from './CrearActividad/CrearActividad';
 import EditarActividad from './EditarActividad/EditarActividad';
-import Reporte from './Reporte/Forms1/Reportes';
+import Reporte from './Reporte/Reporte';
+import ReportePersonalizado from './ReportePersonalizado/ReportePersonalizado';
 import Perfil from './Perfil/Perfil';
 import {Explorar} from './Explorar/Explorar';
 //my routing
@@ -57,11 +58,20 @@ function App() {
                     )
                 }} />
 
-                {/* reporte personalizado */}
+                {/* reporte  */}
                 <AuthRoute path="/reporte" component={(props) => {
                     return (
                         <AppBarDrawer {...props} selected="Reporte">
                             <Reporte />
+                        </AppBarDrawer>
+                    )
+                }} />
+
+                {/* reporte personalizado*/}
+                <AuthRoute path="/personalizado" component={(props) => {
+                    return (
+                        <AppBarDrawer {...props} selected="Reporte">
+                            <ReportePersonalizado />
                         </AppBarDrawer>
                     )
                 }} />
