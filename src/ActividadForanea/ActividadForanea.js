@@ -42,29 +42,27 @@ export const ActividadForanea = () => {
             <Grid container spacing={4}>
 
                 <Grid item xs={12} >
-                    <Typography variant="h2">{state.titulo}</Typography>
+                    <Typography variant="h2">{state['título']}</Typography>
                 </Grid>
 
                 <Grid item xs={12} sm={4} style={{ 'margin-bottom': '25px' }}>
-                    < BarraProgreso porcentajeProgreso={state.porcentajeProgreso} />
+                    < BarraProgreso porcentajeProgreso={state['progreso']} />
                 </Grid>
             </Grid>
 
             <Grid container>
                 <Grid item xs={12} sm={5}>
-                    < DescripCionActividad descripcion={state.descripcion} />
-
+                    < DescripCionActividad descripcion={state['descripción']} />
                 </Grid>
             </Grid>
 
             <Grid container className="separar-arriba">
                 <InformacionActividad 
-                categoria={state.categoria}
-                tipoActividad={state.tipoActividad}
-                periodoAcademicoInicio={state.periodoAcademicoInicio}
-                periodoAcademicoFin={state.periodoAcademicoFin}
-                codigo={state.codigo}
-                rol={state.rol}
+                categoria={state['categoria']}
+                tipoActividad={state['tipo']}
+                periodoAcademicoInicio={state['periodo de inicio']}
+                periodoAcademicoFin={state['periodo de finalizacion']}
+                codigo={state['codigoCreador']}
                 />
             </Grid>
 
