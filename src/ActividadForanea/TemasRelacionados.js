@@ -1,7 +1,7 @@
 import { Chip, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState, } from 'react'
 
-export const TemasRelacionados = ({codigo}) => {
+export const TemasRelacionados = ({labels}) => {
 
     //console.log(codigo);
 
@@ -12,8 +12,11 @@ export const TemasRelacionados = ({codigo}) => {
             </Grid>
 
             <Grid container>
-               <Chip label="Deep learning"/>
-               <Chip label="Computación afectiva"/>
+              {
+                  labels.length == 0 ? 'No hay temas registrados': labels.map((interest) => (
+                      <Chip label = {interest} > </Chip>
+                  )) 
+              }
             </Grid>
         </>
     )

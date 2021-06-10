@@ -13,6 +13,7 @@ import './component.css'
 export const ActividadForanea = () => {
 
     const [state, setState] = useState({});
+    const [interest, setInterest] = useState([]);
     const {activityid} = useParams();
 
     const obtenerActividad = async () => {
@@ -24,7 +25,19 @@ export const ActividadForanea = () => {
         const response = await fetch(url, options);
         const data = await response.json();
 
-        alert(data);
+        return data;
+    }
+
+    const obtenerIntereses = async () => {
+        const url = `${BACKEND_URL}/interests`;
+        const options = {
+            method: 'GET',
+            headers: { 'Content-type': 'application/json', 'Accept': 'application/json' },  
+        }
+
+        const response = await fetch(url, options);
+        const data = await response.json();
+
         return data;
     }
 
@@ -32,6 +45,9 @@ export const ActividadForanea = () => {
        async () => {
             const data = await obtenerActividad();
             setState(data);
+            
+            const datos = await obtenerIntereses();
+            setInterest(datos.filter((i) => data['temas relacionados'].includes(i.id)));
         }, []);
 
     return (
@@ -67,7 +83,7 @@ export const ActividadForanea = () => {
             </Grid>
 
             <Grid className="separar-arriba">
-                <TemasRelacionados temas={state} />
+                <TemasRelacionados labels= {interest.map(i => i.nombre)} />
             </Grid>
 
             <Grid container className="separar-arriba">
